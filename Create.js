@@ -1,272 +1,114 @@
 function create() {
-
-    game.physics.startSystem(Phaser.Physics.P2JS);
-
     upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
-    //BLOCK
-    wall = game.add.sprite(300,300,"wall");
     /* ******************************************************* */
-    player = game.add.sprite(100,300,"player");
-    /* ******************************************************* */
-    flair = game.add.sprite(600,300);
-
-
-    //charRect = game.add.sprite(100,300,null);
-
-    game.physics.p2.enable([ flair, wall ], true);
-
-    wall.body.name     = "wall";
-
-    flair.body.name    = "flair";
-    flair.body.setCircle(circleRay/2);
-
-
-
-
-    //charRect.body.setCircle(circObj._radius, 0, 0);
-
-    ring = game.add.graphics();
-    //ring.lineStyle(1, 0xFFFFFF, 1);
-    ring.beginFill(0xFFFF0B, 0.5);
-    ring.drawCircle(0,0,50);
-    ring.endFill();
-    flair.addChild(ring);
-
-    game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
-}
-
-
-function donotcollide(body1, body2) {
-
-    //si body est rectangle ou cercle false sinon on continu 
-
-
-    return false;
-}
-
-
-function checkOverlap(body1,body2){
-    var body1Info = {
-        name:body1.name,
-        x:body1.sprite.x,
-        y:body1.sprite.y,
-        w:body1.sprite.width,
-        h:body1.sprite.height
-    };
-    var body2Info = {
-        name:body2.name,
-        x:body2.sprite.x,
-        y:body2.sprite.y,
-        w:body2.sprite.width,
-        h:body2.sprite.height
-    };
-
-    console.log(body1Info,body2Info);
-
-    //wall.loadTexture('wall');
-
-    //wall.loadTexture('flair_touch_wall');
-}
-
-
-/* **************************************************************************** */
-/* **************************************************************************** */
-/* **************************************************************************** */
-function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.setImpactEvents(true);
+    game.physics.p2.updateBoundsCollisionGroup();
 
-    mummy = game.add.sprite(200, 360, 'mummy', 5);
-    mummy.scale.x = scaleFactor;
-    mummy.scale.y = scaleFactor;
-
-    mummy.anchor.x = mummy.anchor.y = 0.5 ;
-    mummy.smoothed = false;
-    //anchor position
-
-    //mummy.offsetX
-    circle = new Phaser.Circle(
-        mummy.x,
-        mummy.y,
-        circleRay
-    );
-    //rect = new Phaser.Rectangle(600,300,200,200);
-
-    game.physics.p2.enable(mummy);
-
-    rect = game.add.sprite(600, 300, null);
-
-    //game.physics.arcade.enable([mummy,rect]);
-    //rect.body.setSize(50,50,0,0);
-
-    mummy.animations.add('left', FrameArray, 10, true);
-    mummy.animations.add('right', FrameArray, 10, true);
-
-
-
-
-
-
-    upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
-
-}
-
-
-
-
-
-/* CHARACTER WITH CIRCLE */
-
-// First, add your sprite and enable physics on it
-charRect = game.add.sprite(100,300,null);
-
-
-
-
-game.physics.p2.enable([charRect,block]);
-
-// Create a shape
-var circObj = new Phaser.Circle(0, 0, circleRay);
-// Set the body size of your sprite
-charRect.body.setCircle(circObj._radius, 0, 0);
-// Draw the graphics
-var ring = game.add.graphics();
-ring.lineStyle(2, 0xFF0000, 1);
-ring.drawShape(circObj);
-// Add the graphics as a child to your sprite
-charRect.addChild(ring);
-
-
-
-function create() {
-    game.physics.startSystem(Phaser.Physics.P2JS);
-
-    upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
-    //BLOCK
-    wall = game.add.sprite(300,300,"wall");
     /* ******************************************************* */
-    player = game.add.sprite(100,300,"player");
+    var environmentCollision        = game.physics.p2.createCollisionGroup();
+    var playerCollisionGroup        = game.physics.p2.createCollisionGroup();
+    var objectCollisionGroup        = game.physics.p2.createCollisionGroup();
     /* ******************************************************* */
-    /*    var graphicsFlair = game.add.graphics(100, 100);
-     // draw a circle
-     graphicsFlair.lineStyle(0);
-     graphicsFlair.beginFill(0xFFFF0B, 0.5);
-     graphicsFlair.drawCircle(470, 200, 200);
-     graphicsFlair.endFill();*/
+    contra = game.add.sprite(100, 200, 'contra2');
+    bunny = game.add.sprite(550, 200, 'bunny');
+    //contra.visible = false;
+    //bunny.visible = false;
 
+    game.physics.p2.enable([ contra, bunny ], false);
+    //  Convex polys
+    contra.body.clearShapes();
+    contra.body.loadPolygon('physicsData', 'contra2');
 
-    flair = game.add.sprite(player.x,player.y,'flair');
-    flair.scale.set(2);
+    bunny.body.clearShapes();
+    bunny.body.loadPolygon('physicsData', 'bunny');
+    contra.body.static = true;
+    bunny.body.static = true;
+    /* ******************************************************* */
+    bunny.body.setCollisionGroup(environmentCollision);
+    contra.body.setCollisionGroup(environmentCollision);
+    bunny.body.collides([environmentCollision,playerCollisionGroup]);
+    contra.body.collides([environmentCollision,playerCollisionGroup]);
+    /* ******************************************************* */
+    //ADD ITEM
+    items = game.add.group();
+    items.enableBody = true;
+    items.physicsBodyType = Phaser.Physics.P2JS;
 
+    for (var i = 0; i < itemsNbr; i++){
+        var posX = game.world.randomX;
+        var posY = game.world.randomY;
+        //var posX = posY = 240;
+        var s = items.create(posX, posY, 'book');
+        s.name = "item_"+i;
 
-    game.physics.p2.enable([player,wall,flair],false);
-
-    var circleShape = new Phaser.Circle(game.world.centerX, 100,64);
-    //flair.body.addShape(circleShape);
-
-    //flair.body.setCircle(65);
-
-    player.body.name  = "player";
-    flair.body.name    = "flair";
-    wall.body.name     = "wall";
-
-
-    game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
-
-}
-
-function checkOverlap(body1,body2){
-
-    /*    var body1Info = {
-     name:body1.name,
-     x:body1.sprite.x,
-     y:body1.sprite.y,
-     w:body1.sprite.width,
-     h:body1.sprite.height
-     };
-     var body2Info = {
-     name:body2.name,
-     x:body2.sprite._bounds.x,
-     y:body2.sprite._bounds.y,
-     w:body2.sprite._bounds.width,
-     h:body2.sprite._bounds.height
-     };*/
-
-
-
-    //console.log(body1);
-    wall.loadTexture('wall');
-
-    if( (body1.name == 'player' && body2.name == 'flair') || (body2.name == 'player' && body1.name == 'flair') ){
-        //console.log('inside')
-        return false;
-    }
-
-    if( (body1.name == 'wall' || body2.name == 'wall') ){
-
-        if( (body1.name == 'flair' || body2.name == 'flair') ){
-
-            console.log('flair touche wall');
-            wall.loadTexture('flair_touch_wall');
-
+        for (var y = 0; y < scentArray.length; y++) {
+            itemRing[y] = game.add.graphics(0, 0);
+            itemRing[y].name = s.name+'_'+scentArray[y].name;
+            itemRing[y].circleData = new Phaser.Circle(posX,posY,scentArray[y].diameter);
+            itemRing[y].beginFill(scentArray[y].color, .1);
+            itemRing[y].drawCircle(-posX,-posY,scentArray[y].diameter);
+            itemRing[y].endFill();
+            game.physics.p2.enable([ itemRing[y] ],false);
+            itemRing[y].body.x = posX;
+            itemRing[y].body.y = posY;
+            itemRing[y].body.static = true;
+            itemRing[y].body.immovable = true;
+            s.addChild(itemRing[y]);
         }
-        if( (body1.name == 'player' || body2.name == 'player') ){
 
-            console.log('player touche wall');
-            wall.loadTexture('player_touch_wall');
 
-        }
+        s.body.static = true;
+        s.body.setCollisionGroup(objectCollisionGroup);
+        s.body.collides([objectCollisionGroup,playerCollisionGroup]);
     }
+/*    console.log("B")
+    console.log(items.children[0].x + " " + items.children[0].y);
+    console.log("circle")
+    console.log(items.children[0].children[0].x + " " + items.children[0].children[0].y);
+    console.log("body")
+    console.log(items.children[0].children[0].body.x + " " + items.children[0].children[0].body.y);*/
 
 
 
-    /*    if( (body1.name == 'flair' && body2.name == 'wall') || (body2.name == 'flair' && body1.name == 'wall') ){
-     console.log('flair touche wall');
-     wall.loadTexture('flair_touch_wall');
+    /* ******************************************************* */ 
+    //PLAYER
+    player = game.add.sprite(playerPos.x,playerPos.y,"player");
+    game.physics.p2.enable([player],false);
+    player.body.name = "player";
+    player.body.fixedRotation = true;
+    for (var i = 0; i < scentArray.length; i++) {
+        playerRing[i] = game.add.graphics(playerPos.x,playerPos.y);
+        playerRing[i].name = player.body.name+'_'+scentArray[i].name;
+        playerRing[i].circleData = new Phaser.Circle(playerPos.x,playerPos.y,scentArray[i].diameter);
+        playerRing[i].beginFill(scentArray[i].color, 0);
+        playerRing[i].drawCircle(0,0,scentArray[i].diameter);
+        playerRing[i].endFill();
+        game.physics.p2.enable([ playerRing[i] ],false);
+        playerRing[i].body.static = true;
+    }
+    player.body.setCollisionGroup(playerCollisionGroup);
 
-
-     }else if( (body1.name == 'player' && body2.name == 'wall') || (body2.name == 'player' && body1.name == 'wall') ){
-     console.log('player touche wall');
-     wall.loadTexture('player_touch_wall');
-     }*/
-
-
-    /*    if( (body1.name == 'charRect' && body2.name == 'block') || (body2.name == 'block' && body1.name == 'charRect') ){
-     console.log('charRect touche block');
-     }*/
-
-    //var r = checkCollision(body1Info,body2Info);
-    //console.log(r);
+    player.body.collides(environmentCollision, hitEnvironment, this);
+    player.body.collides(objectCollisionGroup, checkOverlap, this);
 
 }
 
-
-
-
-
-
-
-
-
-function BoxBoxCollision(body1,body2){
-
-    if (body2.x >= body1.x + body1.w
-        || body2.x + body2.w <= body1.x
-        || body2.y >= body1.y + body1.h
-        || body2.y + body2.h <= body1.y )
-    {
-        return false;
-    }
-    return true;
+function hitEnvironment(){
+    console.log(arguments);
 }
+
+function hitScent(){
+    console.log(arguments);
+}
+
+function checkOverlap(){
+    console.log(arguments);
+}
+
+/* **************************************************************************** */
+/* **************************************************************************** */
+/* **************************************************************************** */
