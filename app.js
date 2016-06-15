@@ -1,10 +1,17 @@
-console.log("init");
-var game = new Phaser.Game(1000, 900, Phaser.CANVAS, 'phaser-example', {
-    preload: preload,
-    create: create,
-    update: update,
-    render: render
-});
+var Application = {
+	config:{
+		width:1000,
+		height:900
+	}
+}
+
+
+
+
+
+
+
+
 
 /*  INPUT */
 var upKey;
