@@ -3,15 +3,22 @@ var Application = {
 		width:1000,
 		height:900
 	},
-	debugMode:true,
+	debugMode:false,
 	gameplay:{
-		itemNbr:1,//nombre d'item a collecter
-		playerActiveScent:true, //acitve ou non les sens du chien
-		scentAlpha:.3, //alpha du sens
+		itemNbr:3,//nombre d'item a collecter
+		playerVisibleScent:true, //acitve ou non les sens du chien
+		timerVisible:true,
+		scentAlpha:.5, //alpha du sens
 		colliderGroup:{
 			environmentColGroup:null,
 			playerColGroup:null,
+			missingColGroup:null,
 			objectColGroup:null
 		}
+	},
+	gameData:{
+		items:null//store object for overlap
 	}
 }
+
+var playerRing = [];

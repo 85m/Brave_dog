@@ -17,6 +17,9 @@ Application.TitleScreen.prototype = {
 
 
 		var settings 	= this.game.add.text(centerX, Application.config.height-150 , "Settings", style);
+		settings.inputEnabled = true;
+		settings.events.onInputOver.add(startSetting, this);
+
 		var tutorial 	= this.game.add.text(centerX, Application.config.height-190 , "Tutorial", style);
 		tutorial.inputEnabled = true;
 		tutorial.events.onInputOver.add(startTuto, this);
@@ -40,4 +43,8 @@ function startTuto(){
 
 function startGame(){
 	this.state.start('Level');
+}
+
+function startSetting(){
+	this.state.start('Setting');
 }

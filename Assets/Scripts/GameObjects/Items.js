@@ -4,7 +4,7 @@ function Item(_game,_x,_y){
 
 	var _self = _game.add.sprite(_x, _y, "book");
 	_game.physics.p2.enable([_self],false);
-	_self.body.name = "item_"+idx;
+	_self.name = "item_"+idx;
     _self.body.fixedRotation = true;
     _self.body.static = true;
 
@@ -14,6 +14,7 @@ function Item(_game,_x,_y){
     _self.body.setCollisionGroup(objectColGroup);
     _self.body.collides([playerColGroup,objectColGroup]);
 
+    idx++;
     return _self;
 }
 

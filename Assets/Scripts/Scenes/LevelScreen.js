@@ -1,9 +1,7 @@
 Application.LevelScreen = function(){
 	console.log("Starting My Game");
+	this.items;
 }
-
-var test;
-
 
 Application.LevelScreen.prototype = {
 	create:function(){
@@ -18,18 +16,14 @@ Application.LevelScreen.prototype = {
 
 
 	    this.player = Player(this.game,400,400);
-
-	    test = this.player;
-	    console.log(test);
-	    //this.items = Item(this.game,10,100);
-
-	    this.items = itemGroups(this.game);
-
+		Application.gameData.items 	= itemGroups(this.game);
 	},
 	update:function(){
 		this.player.update();
 	},
 	render:function(){
-		game.debug.spriteInfo(test, 32, 32);
+		game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
 	}
 }
+
+
