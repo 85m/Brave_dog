@@ -49,6 +49,9 @@ function Player(_game,_x,_y){
 
 function checkCollideWithObject(){
 	//console.log(arguments);
+
+	/* si bon objet augmenter le bonus  sinon caché */
+	//Application.gameData.layers = Application.gameData.layers + 1;
 }
 function checkCollideWithMissing(){
 	//console.log(arguments);

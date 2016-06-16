@@ -19,7 +19,7 @@ Application.LevelScreen.prototype = {
 		this.itemGroups = itemGroups(this.game);
 
 		// this.missing 	= Missing(this.game,900,100);
-		// this.itemGroups.add(this.missing);
+		//this.itemGroups.add(this.missing);
 
 		Application.gameData.items 	= this.itemGroups;
 
@@ -30,7 +30,7 @@ Application.LevelScreen.prototype = {
 		scentCollisionWithObject(this.game);
 	},
 	render:function(){
-		//game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
+		game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
 	}
 }
 

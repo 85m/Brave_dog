@@ -20,7 +20,7 @@ var Application = {
 	gameData:{
 		items:null,//store object for overlap
 		missing:null,
-		bonus:2,
+		layers:3,
 		malus:null
 	}
 }

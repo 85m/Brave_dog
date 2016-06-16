@@ -1,7 +1,15 @@
-var scentArray = [
-    {name:'longScent',diameter:240,color:0xFFF000},
+/*var scentArray = [
+    {name:'closeScent',diameter:100,color:0xFF0000},
     {name:'midScent',diameter:160,color:0x00FF00},
-    {name:'closeScent',diameter:80,color:0xFF0000}
+    {name:'nv1Scent',diameter:220,color:0xFFF000},
+    {name:'nv2Scent',diameter:280,color:0x0000FF},
+    {name:'nv3gScent',diameter:340,color:0xFF00FF}
+]*/
+
+var scentArray = [
+    {name:'nv1Scent',diameter:220,color:0xFFF000},
+    {name:'midScent',diameter:160,color:0x00FF00},
+    {name:'closeScent',diameter:100,color:0xFF0000}
 ]
 
 
@@ -41,7 +49,6 @@ function Scent(_game,_object,cpt){
 
 function layerScent(_game,_object){
     var _self;
-    //var apply = App;
     for (var y = 0; y < scentArray.length; y++) {
         _self = Scent(_game,_object,y);
         if(_object.name != "player"){
@@ -69,7 +76,7 @@ function playerFeedBackScent(_game,_object){
 
 /* APPLY FOR SCENT OF PLAYER*/
 function moveUpdatePlayerScent(_player){
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < scentArray.length; i++) {
         playerRing[i].body.x = _player.body.x;
         playerRing[i].body.y = _player.body.y;
     }
