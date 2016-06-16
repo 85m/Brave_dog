@@ -27,10 +27,10 @@ Application.LevelScreen.prototype = {
 	},
 	update:function(){
 		this.player.update();
-		scentCollisionWithObject(this.game);
+		//scentCollisionWithObject(this.game);
 	},
 	render:function(){
-		game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
+		//game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
 	}
 }
 

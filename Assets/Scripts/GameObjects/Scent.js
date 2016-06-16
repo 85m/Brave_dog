@@ -49,7 +49,9 @@ function Scent(_game,_object,cpt){
 
 function layerScent(_game,_object){
     var _self;
-    for (var y = 0; y < scentArray.length; y++) {
+    playerRing = [];
+    console.log(playerRing);
+    for (var y = 0; y < Application.gameData.layers; y++) {
         _self = Scent(_game,_object,y);
         if(_object.name != "player"){
             _object.addChild(_self);
@@ -57,6 +59,7 @@ function layerScent(_game,_object){
             playerRing.push(_self);
         }
     }
+    console.log(playerRing);
     return _object;
 }
 
@@ -76,7 +79,7 @@ function playerFeedBackScent(_game,_object){
 
 /* APPLY FOR SCENT OF PLAYER*/
 function moveUpdatePlayerScent(_player){
-    for (var i = 0; i < scentArray.length; i++) {
+    for (var i = 0; i < Application.gameData.layers; i++) {
         playerRing[i].body.x = _player.body.x;
         playerRing[i].body.y = _player.body.y;
     }

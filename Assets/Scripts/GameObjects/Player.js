@@ -1,3 +1,5 @@
+var g,s, cpt = 0;
+
 function Player(_game,_x,_y){
 
 	var _self = _game.add.sprite(_x, _y, "player");
@@ -23,8 +25,10 @@ function Player(_game,_x,_y){
     _self.body.collides(objectColGroup, checkCollideWithObject, this);
     _self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
+    g = _game;
+    s = _self;
+
      layerScent(_game,_self);
-     //playerFeedBackScent(_game,_self);
     _self.scent = playerRing;
 
 	_self.update = function(){
@@ -48,11 +52,15 @@ function Player(_game,_x,_y){
 }
 
 function checkCollideWithObject(){
-	//console.log(arguments);
-
-	/* si bon objet augmenter le bonus  sinon caché */
-	//Application.gameData.layers = Application.gameData.layers + 1;
+	Application.gameData.layers += 0.5;
+	cpt++;
+	if(cpt == 2){
+		cpt = 0;
+		layerScent(g,s);
+	}
 }
+
+
 function checkCollideWithMissing(){
 	//console.log(arguments);
 }
@@ -86,3 +94,17 @@ function growCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radiu
 function reduceCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true); }
 
 /* ************************************************************ */
+
+
+
+
+function iceCubeCollision(body1, body2){
+	if (!body1.hasCollided) {
+	// check to see if the 'hasCollided'
+	//property is not 'truthy' (i.e. not set, or set to false or null or 0 or something)
+	console.log("Ice cube collision")
+	body1.hasCollided = true;
+	// set it to true so if the collision happens again,
+	//everything inside this if statement will be skipped   ...  
+	}
+}

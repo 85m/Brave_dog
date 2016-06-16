@@ -15,7 +15,6 @@ function Item(_game,_x,_y){
     _self.body.collides([playerColGroup,objectColGroup]);
     _self.visible = Application.gameplay.objectVisible;
 
-
     idx++;
     return _self;
 }
@@ -35,7 +34,7 @@ function itemGroups(_game){
 
         var anItem = Item(_game,posX,posY);
 
-        layerScent(_game,anItem);
+        //layerScent(_game,anItem);
         _items.add(anItem);
     }
 
