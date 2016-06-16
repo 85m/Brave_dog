@@ -5,6 +5,12 @@ var scentArray = [
 ]
 
 
+/*
+name : name du cercle du flair
+circleData : cercle de la meme taille de celui dessiné pour gerer la collision avec celui du player
+ ** dessine le cercle
+ajout de la physics
+*/
 function Scent(_game,_object,cpt){
     if(_object.name != "player"){
         var _self = _game.add.graphics(0,0);
@@ -27,7 +33,6 @@ function Scent(_game,_object,cpt){
         _self.endFill();
         _game.physics.p2.enable([ _self ], false);
         _self.body.static = true;
-
     }
     _self.body.debug = Application.debugMode;
     return _self;
@@ -36,6 +41,7 @@ function Scent(_game,_object,cpt){
 
 function layerScent(_game,_object){
     var _self;
+    //var apply = App;
     for (var y = 0; y < scentArray.length; y++) {
         _self = Scent(_game,_object,y);
         if(_object.name != "player"){
@@ -48,9 +54,22 @@ function layerScent(_game,_object){
 }
 
 
+
+function playerFeedBackScent(_game,_object){
+    var _self = _game.add.graphics(_object.x, _object.y);
+    _self.name = _object.name+'_feedback';
+    //_self.circleData = new Phaser.Circle(_object.x,_object.y,scentArray[cpt].diameter);
+    _self.beginFill(0x0000FF, 1);
+    _self.drawCircle(0,0,scentArray[0].diameter);
+    _self.endFill();
+    _game.physics.p2.enable([ _self ], false);
+    _self.body.static = true;
+    playerRing.push(_self);
+}
+
 /* APPLY FOR SCENT OF PLAYER*/
-function updatePlayerScent(_player){
-    for (var i = 0; i < scentArray.length; i++) {
+function moveUpdatePlayerScent(_player){
+    for (var i = 0; i < 3; i++) {
         playerRing[i].body.x = _player.body.x;
         playerRing[i].body.y = _player.body.y;
     }

@@ -5,7 +5,7 @@ var Application = {
 	},
 	debugMode:false,
 	gameplay:{
-		itemNbr:3,//nombre d'item a collecter
+		itemNbr:1,//nombre d'item a collecter
 		playerVisibleScent:true, //acitve ou non les sens du chien
 		timerVisible:true,
 		scentAlpha:.3, //alpha du sens
@@ -18,14 +18,14 @@ var Application = {
 		}
 	},
 	gameData:{
-		items:null//store object for overlap
+		items:null,//store object for overlap
+		missing:null,
+		bonus:2,
+		malus:null
 	}
 }
 
 var playerRing = [];
 
-
+/* FOR TEST */
 var objectPosTest = [{x:100,y:100},{x:200,y:800},{x:900,y:700}];
-
-
-var tween;

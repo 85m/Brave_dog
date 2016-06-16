@@ -24,7 +24,8 @@ function Player(_game,_x,_y){
     _self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
      layerScent(_game,_self);
-    _self.scent = playerRing;   
+     //playerFeedBackScent(_game,_self);
+    _self.scent = playerRing;
 
 	_self.update = function(){
     	_self.body.setZeroVelocity();
@@ -41,8 +42,7 @@ function Player(_game,_x,_y){
 		else if (_self.controller.rightKey.isDown){
 			_self.body.moveRight(_self.speed);
 		}
-		updatePlayerScent(_self);
-
+		moveUpdatePlayerScent(_self);
     }
     return _self;
 }
@@ -54,19 +54,16 @@ function checkCollideWithMissing(){
 	//console.log(arguments);
 }
 
-
-var currentRadius;
-
-
-
-function scentCollision(_game){
+/* ************************************************************ */
+/* loop into all item  and check if an overlap is made with the player scent */
+function scentCollisionWithObject(_game){
 	var isCollide = false;
 	var r = playerRing[0].circleData;
 	Application.gameData.items.forEach(function(item) {
 		var res = checkObjectOverlap(playerRing[0], item);
-		if(res.s){
-			console.log('overlap ' + res.i);
-			reduceCircle(_game,r,80);
+		if(res){
+			//console.log('overlap 1');
+			reduceCircle(_game,r,20);
 			isCollide  = true;
 		}
 	});
@@ -75,24 +72,14 @@ function scentCollision(_game){
 		growCircle(_game,r,120);
 	}
 }
-
-
-
-
-
-
+/* overlap between circle */
 function checkObjectOverlap(spriteA, spriteB) {
 	var a = spriteA.circleData;
 	var b = spriteB.children[0].circleData;
-
-	return {s:Phaser.Circle.intersects(a, b) , i:spriteB.name};
-
+	return Phaser.Circle.intersects(a, b);
 }
+/* circle grow or reduce */
+function growCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true); }
+function reduceCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true); }
 
-function growCircle(_game,_circle,_radius){
-	_game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true);
-}
-
-function reduceCircle(_game,_circle,_radius){
-	_game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true);
-}
+/* ************************************************************ */
