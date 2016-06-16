@@ -1,6 +1,5 @@
 Application.LevelScreen = function(){
 	console.log("Starting My Game");
-	this.items;
 }
 
 Application.LevelScreen.prototype = {
@@ -12,14 +11,18 @@ Application.LevelScreen.prototype = {
 
 		environmentColGroup  	= game.physics.p2.createCollisionGroup();
 		playerColGroup        	= game.physics.p2.createCollisionGroup();
+		missingColGroup        	= game.physics.p2.createCollisionGroup();
 		objectColGroup        	= game.physics.p2.createCollisionGroup();
 
+		Application.gameData.items 	= itemGroups(this.game);
 
 	    this.player = Player(this.game,400,400);
-		Application.gameData.items 	= itemGroups(this.game);
+
+	    this.missing = Missing(this.game,900,100);
 	},
 	update:function(){
 		this.player.update();
+		scentCollision(this.game);
 	},
 	render:function(){
 		game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');

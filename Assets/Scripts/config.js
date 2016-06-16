@@ -8,7 +8,8 @@ var Application = {
 		itemNbr:3,//nombre d'item a collecter
 		playerVisibleScent:true, //acitve ou non les sens du chien
 		timerVisible:true,
-		scentAlpha:.5, //alpha du sens
+		scentAlpha:.3, //alpha du sens
+		objectVisible:true,
 		colliderGroup:{
 			environmentColGroup:null,
 			playerColGroup:null,
@@ -22,3 +23,9 @@ var Application = {
 }
 
 var playerRing = [];
+
+
+var objectPosTest = [{x:100,y:100},{x:200,y:800},{x:900,y:700}];
+
+
+var tween;

@@ -20,10 +20,11 @@ function Player(_game,_x,_y){
     _self.body.collideWorldBounds = true;
 
     _self.body.setCollisionGroup(playerColGroup);
-    _self.body.collides(objectColGroup, checkOverlap, this);
+    _self.body.collides(objectColGroup, checkCollideWithObject, this);
+    _self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
      layerScent(_game,_self);
-    _self.scent = playerRing;
+    _self.scent = playerRing;   
 
 	_self.update = function(){
     	_self.body.setZeroVelocity();
@@ -42,34 +43,56 @@ function Player(_game,_x,_y){
 		}
 		updatePlayerScent(_self);
 
-
-		//console.log(Application.gameData.items);
-		Application.gameData.items.forEach(function(item) {
-			//console.log(item.name)
-			var res = checkObjectOverlap(playerRing[0], item);
-			var r = playerRing[0].circleData;
-
-			if(res){
-				console.log('overlap');
-				_game.add.tween(r).to( { radius: 80 }, 1000, Phaser.Easing.Linear.None, true);
-			}else{
-				_game.add.tween(r).to( { radius: 120 }, 1000, Phaser.Easing.Linear.None, true);
-			}
-		});
     }
     return _self;
 }
 
-function checkOverlap(){
+function checkCollideWithObject(){
 	//console.log(arguments);
 }
+function checkCollideWithMissing(){
+	//console.log(arguments);
+}
+
+
+var currentRadius;
+
+
+
+function scentCollision(_game){
+	var isCollide = false;
+	var r = playerRing[0].circleData;
+	Application.gameData.items.forEach(function(item) {
+		var res = checkObjectOverlap(playerRing[0], item);
+		if(res.s){
+			console.log('overlap ' + res.i);
+			reduceCircle(_game,r,80);
+			isCollide  = true;
+		}
+	});
+
+	if(!isCollide){
+		growCircle(_game,r,120);
+	}
+}
+
+
+
+
 
 
 function checkObjectOverlap(spriteA, spriteB) {
 	var a = spriteA.circleData;
 	var b = spriteB.children[0].circleData;
-	//console.log(spriteA,spriteB);
 
-	return Phaser.Circle.intersects(a, b);
+	return {s:Phaser.Circle.intersects(a, b) , i:spriteB.name};
 
+}
+
+function growCircle(_game,_circle,_radius){
+	_game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true);
+}
+
+function reduceCircle(_game,_circle,_radius){
+	_game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true);
 }

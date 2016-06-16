@@ -10,6 +10,7 @@ Application.LoadingScreen.prototype = {
 
 		this.load.image('player', 'Assets/Graphics/Player/player.jpg');
 		this.load.image('book', 'Assets/Graphics/Items/book.jpg');
+		this.load.image('missing', 'Assets/Graphics/Missing/missing.jpg');
 
 		this.load.image('bunny', 'Assets/Graphics/Map/bunny.png');
 		this.load.image('contra2', 'Assets/Graphics/Map/contra2.png');
