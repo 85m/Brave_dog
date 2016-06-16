@@ -13,4 +13,4 @@ game.state.add('Setting',Application.SettingScreen);
 game.state.add('Level',Application.LevelScreen);
 
 
-game.state.start("Loading");
+game.state.start("Setting");
