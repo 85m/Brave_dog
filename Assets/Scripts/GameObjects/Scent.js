@@ -7,9 +7,11 @@
 ]*/
 
 var scentArray = [
-    {name:'nv1Scent',diameter:220,color:0xFFF000},
+    {name:'closeScent',diameter:100,color:0xFF0000},
     {name:'midScent',diameter:160,color:0x00FF00},
-    {name:'closeScent',diameter:100,color:0xFF0000}
+    {name:'nv1Scent',diameter:220,color:0xFFF000},
+    {name:'nv2Scent',diameter:280,color:0x0000FF},
+    {name:'nv3gScent',diameter:340,color:0xFF00FF}
 ]
 
 
@@ -20,6 +22,9 @@ circleData : cercle de la meme taille de celui dessiné pour gerer la collision 
 ajout de la physics
 */
 function Scent(_game,_object,cpt){
+    console.log(_object);
+
+
     if(_object.name != "player"){
         var _self = _game.add.graphics(0,0);
         _self.name = _object.name+'_'+scentArray[cpt].name;
@@ -49,8 +54,6 @@ function Scent(_game,_object,cpt){
 
 function layerScent(_game,_object){
     var _self;
-    playerRing = [];
-    console.log(playerRing);
     for (var y = 0; y < Application.gameData.layers; y++) {
         _self = Scent(_game,_object,y);
         if(_object.name != "player"){
@@ -59,18 +62,33 @@ function layerScent(_game,_object){
             playerRing.push(_self);
         }
     }
-    console.log(playerRing);
     return _object;
+}
+
+var layerIdx = 1;
+function addLayerstoPlayer(_game,_object){
+    
+        var _self = Scent(_game,_object,layerIdx++);
+        //playerRing.pop();
+        playerRing.push(_self);
+        //console.log(_object.scent.length);
+        //playerFeedBackScent(_game,_object);
 }
 
 
 
+
+
 function playerFeedBackScent(_game,_object){
+
     var _self = _game.add.graphics(_object.x, _object.y);
     _self.name = _object.name+'_feedback';
-    //_self.circleData = new Phaser.Circle(_object.x,_object.y,scentArray[cpt].diameter);
-    _self.beginFill(0x0000FF, 1);
-    _self.drawCircle(0,0,scentArray[0].diameter);
+
+    var currentDiameter = _object.scent[ _object.scent.length-1 ].circleData.diameter;
+
+    _self.circleData = new Phaser.Circle(_object.x,_object.y,currentDiameter);
+    _self.beginFill(0xFFFFFF, .5);
+    _self.drawCircle(0,0,currentDiameter);
     _self.endFill();
     _game.physics.p2.enable([ _self ], false);
     _self.body.static = true;
@@ -79,12 +97,13 @@ function playerFeedBackScent(_game,_object){
 
 /* APPLY FOR SCENT OF PLAYER*/
 function moveUpdatePlayerScent(_player){
+    //console.log(_player)
     for (var i = 0; i < Application.gameData.layers; i++) {
         playerRing[i].body.x = _player.body.x;
         playerRing[i].body.y = _player.body.y;
     }
-    playerRing[0].circleData.x = _player.body.x;
-    playerRing[0].circleData.y = _player.body.y;
+    //playerRing[playerRing.length-1].body.x = _player.body.x;
+    //playerRing[playerRing.length-1].body.y = _player.body.y;
 }
 
 

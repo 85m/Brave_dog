@@ -23,7 +23,7 @@ Application.LevelScreen.prototype = {
 
 		Application.gameData.items 	= this.itemGroups;
 
-	    ply = this.player = Player(this.game,400,400);
+	    ply = this.player = Player(this.game,300,600);
 	},
 	update:function(){
 		this.player.update();
