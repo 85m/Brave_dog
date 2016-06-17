@@ -28,8 +28,8 @@ function Player(_game,_x,_y){
     g = _game;
     s = _self;
 
-     layerScent(_game,_self);
     _self.scent = playerRing;
+     addLayerstoPlayer(_game,_self);
      //playerFeedBackScent(_game,_self);
 
 	_self.update = function(){
@@ -56,7 +56,7 @@ function checkCollideWithObject(){
 	cpt++;
 	if(cpt == 2){
 		cpt = 0;
-		if(Application.gameData.layers < scentArray.length ){
+		if(Application.gameData.layers < playerScentArray.length ){
 			Application.gameData.layers++;
 			addLayerstoPlayer(g,s);
 		}

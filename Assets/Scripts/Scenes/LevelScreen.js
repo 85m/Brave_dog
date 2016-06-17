@@ -26,7 +26,7 @@ Application.LevelScreen.prototype = {
 	    ply = this.player = Player(this.game,300,600);
 	},
 	update:function(){
-		this.player.update();
+		//this.player.update();
 		//scentCollisionWithObject(this.game);
 	},
 	render:function(){
