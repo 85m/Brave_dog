@@ -8,7 +8,7 @@ var Application = {
 		itemNbr:2,//nombre d'item a collecter
 		playerVisibleScent:true, //acitve ou non les sens du chien
 		timerVisible:true,
-		scentAlpha:.0, //alpha du sens
+		scentAlpha:.4, //alpha du sens
 		objectVisible:true,
 		colliderGroup:{
 			environmentColGroup:null,

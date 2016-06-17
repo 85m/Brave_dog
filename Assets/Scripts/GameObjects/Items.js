@@ -36,6 +36,3 @@ function itemGroups(_game){
     }
     return _items;
 }
-
-
-

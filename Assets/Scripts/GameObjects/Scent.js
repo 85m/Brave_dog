@@ -51,7 +51,7 @@ function playerFeedBackScent(_game,_object){
     var _self = _game.add.graphics(_object.x, _object.y);
     _self.name = _object.name+'_feedback';
     var currentDiameter = _object.scent[ _object.scent.length-1 ].circleData.diameter;
-    _self.beginFill(0xFFFFFF, .5);
+    _self.beginFill(0x61b2cd, .5);
     _self.drawCircle(0,0,currentDiameter);
     _self.endFill();
     _self.circleData = new Phaser.Circle(_object.x,_object.y,currentDiameter);

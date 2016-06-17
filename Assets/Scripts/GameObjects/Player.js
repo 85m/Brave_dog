@@ -22,7 +22,7 @@ function Player(_game,_x,_y){
     _self.body.collideWorldBounds = true;
 
     _self.body.setCollisionGroup(playerColGroup);
-    _self.body.collides(objectColGroup, checkCollideWithObject, this);
+    //_self.body.collides(objectColGroup, checkCollideWithObject, this);
     _self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
     g = _game;
@@ -30,7 +30,6 @@ function Player(_game,_x,_y){
 
     _self.scent = playerRing;
      addLayerstoPlayer(_game,_self);
-     //playerFeedBackScent(_game,_self);
 
 	_self.update = function(){
     	_self.body.setZeroVelocity();
@@ -72,24 +71,33 @@ function checkCollideWithMissing(){
 /* loop into all item  and check if an overlap is made with the player scent */
 function scentCollisionWithObject(_game){
 	var isCollide = false;
-	var r = playerRing[0].circleData;
+	//var r = playerRing[ playerRing.length-1 ].circleData;
+
+	var currentSensorSize = playerRing[ playerRing.length-1 ].circleData.radius;
+
 	Application.gameData.items.forEach(function(item) {
+
 		var res = checkObjectOverlap(playerRing[0], item);
-		if(res){
-			//console.log('overlap 1');
-			reduceCircle(_game,r,20);
-			isCollide  = true;
-		}
+		console.log(res);
+/*		if(res){
+			console.log('overlap 1');
+			//reduceCircle(_game,r,0);
+			//isCollide  = true;
+		}*/
 	});
 
-	if(!isCollide){
-		growCircle(_game,r,120);
-	}
+/*	if(!isCollide){
+		growCircle(_game,r,currentSensorSize);
+	}*/
 }
+
 /* overlap between circle */
 function checkObjectOverlap(spriteA, spriteB) {
 	var a = spriteA.circleData;
 	var b = spriteB.children[0].circleData;
+
+	//console.log(a,b);
+
 	return Phaser.Circle.intersects(a, b);
 }
 /* circle grow or reduce */
@@ -97,17 +105,3 @@ function growCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radiu
 function reduceCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true); }
 
 /* ************************************************************ */
-
-
-
-
-function iceCubeCollision(body1, body2){
-	if (!body1.hasCollided) {
-	// check to see if the 'hasCollided'
-	//property is not 'truthy' (i.e. not set, or set to false or null or 0 or something)
-	console.log("Ice cube collision")
-	body1.hasCollided = true;
-	// set it to true so if the collision happens again,
-	//everything inside this if statement will be skipped   ...  
-	}
-}
