@@ -52,10 +52,11 @@ function Player(_game,_x,_y){
 }
 
 function checkCollideWithObject(){
-	Application.gameData.layers += 0.5;
+	
 	cpt++;
 	if(cpt == 2){
 		cpt = 0;
+		Application.gameData.layers++;
 		layerScent(g,s);
 	}
 }
