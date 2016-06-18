@@ -22,7 +22,7 @@ function Player(_game,_x,_y){
     _self.body.collideWorldBounds = true;
 
     _self.body.setCollisionGroup(playerColGroup);
-    //_self.body.collides(objectColGroup, checkCollideWithObject, this);
+    _self.body.collides(objectColGroup, checkCollideWithObject, this);
     _self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
     g = _game;
@@ -51,10 +51,11 @@ function Player(_game,_x,_y){
     return _self;
 }
 
-function checkCollideWithObject(){
+function checkCollideWithObject(obj1,obj2){
 	cpt++;
 	if(cpt == 2){
 		cpt = 0;
+		Application.gameData.items.remove(obj2.sprite);
 		if(Application.gameData.layers < playerScentArray.length ){
 			Application.gameData.layers++;
 			addLayerstoPlayer(g,s);
@@ -71,37 +72,67 @@ function checkCollideWithMissing(){
 /* loop into all item  and check if an overlap is made with the player scent */
 function scentCollisionWithObject(_game){
 	var isCollide = false;
-	//var r = playerRing[ playerRing.length-1 ].circleData;
+	var r = playerRing[ playerRing.length-1];
 
-	var currentSensorSize = playerRing[ playerRing.length-1 ].circleData.radius;
+	//comme on modifie le circleData du feedback nous de vons recuperer la valeur du
+	//precedent circleData pour faire correspondre avec celui du feedback
+	var currentSensorSize = playerRing[ playerRing.length-2 ].circleData.radius;
+	var minimumSensorSize = playerRing[ 0 ].circleData.radius;
 
 	Application.gameData.items.forEach(function(item) {
-
-		var res = checkObjectOverlap(playerRing[0], item);
-		console.log(res);
-/*		if(res){
+		var res = checkObjectOverlap(playerRing[ playerRing.length-1 ], item);
+		if(res){
 			console.log('overlap 1');
-			//reduceCircle(_game,r,0);
-			//isCollide  = true;
-		}*/
+			reduceCircle(_game,r,minimumSensorSize/2);
+			isCollide  = true;
+		}
 	});
 
-/*	if(!isCollide){
+	if(!isCollide){
 		growCircle(_game,r,currentSensorSize);
-	}*/
+	}
 }
 
 /* overlap between circle */
 function checkObjectOverlap(spriteA, spriteB) {
 	var a = spriteA.circleData;
 	var b = spriteB.children[0].circleData;
-
-	//console.log(a,b);
-
 	return Phaser.Circle.intersects(a, b);
 }
-/* circle grow or reduce */
-function growCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true); }
-function reduceCircle(_game,_circle,_radius){ _game.add.tween(_circle).to( { radius: _radius }, 1000, "Linear", true); }
+/*
+circle grow or reduce
+
+Explain:
+the value of radius is changin in the tween, with the tween callback we clear and redraw each time the circle
+drawcircle demands the circle diameter
+
+*/
+
+function reduceCircle(_game,_circle,_radius){
+	var tw = _game.add.tween(_circle.circleData).to( { radius: _radius }, 1000, "Linear", true);
+
+	tw.onUpdateCallback(
+		function(twn,percent,twnData){
+			_circle.clear();
+			_circle.beginFill(0x61b2cd,.8);
+			_circle.drawCircle(0, 0, _circle.circleData.diameter);
+			_circle.endFill();
+	}, this
+	);
+
+}
+
+function growCircle(_game,_circle,_radius){
+	var tw = _game.add.tween(_circle.circleData).to( { radius: _radius }, 500, "Linear", true);
+	tw.onUpdateCallback(
+		function(twn,percent,twnData){
+			_circle.clear();
+			_circle.beginFill(0x61b2cd,.8);
+			_circle.drawCircle(0, 0, _circle.circleData.diameter);
+			_circle.endFill();
+		}, this
+	);
+}
+
 
 /* ************************************************************ */

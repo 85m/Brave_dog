@@ -51,12 +51,14 @@ function playerFeedBackScent(_game,_object){
     var _self = _game.add.graphics(_object.x, _object.y);
     _self.name = _object.name+'_feedback';
     var currentDiameter = _object.scent[ _object.scent.length-1 ].circleData.diameter;
-    _self.beginFill(0x61b2cd, .5);
+    _self.beginFill(0x61b2cd,.8);
     _self.drawCircle(0,0,currentDiameter);
     _self.endFill();
     _self.circleData = new Phaser.Circle(_object.x,_object.y,currentDiameter);
     _game.physics.p2.enable([ _self ], false);
     _self.body.static = true;
+    _self.body.setCircle( _object.scent[ _object.scent.length-1 ].circleData.radius  );
+    //_self.body.debug = true;
     playerRing.push(_self);
 }
 
@@ -66,9 +68,14 @@ function moveUpdatePlayerScent(_player){
         for (var i = 0; i < Application.gameData.layers; i++) {
             playerRing[i].body.x = _player.body.x;
             playerRing[i].body.y = _player.body.y;
+            playerRing[i].circleData.x = _player.body.x;
+            playerRing[i].circleData.y = _player.body.y;
+
         }
-        playerRing[playerRing.length-1].body.x = _player.body.x;
-        playerRing[playerRing.length-1].body.y = _player.body.y;
+        playerRing[playerRing.length-1].body.x = _player.x;
+        playerRing[playerRing.length-1].body.y = _player.y;
+        playerRing[playerRing.length-1].circleData.x = _player.x;
+        playerRing[playerRing.length-1].circleData.y = _player.y;
     }
 }
 
