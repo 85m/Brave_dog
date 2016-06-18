@@ -23,8 +23,13 @@ var Application = {
 		missing:1,
 		layers:1,
 		malus:null
+	},
+	settings:{
+		sensorBoolean:PlayerPrefs.Load("sensorStatus"),
+		timerBoolean:PlayerPrefs.Load("timerStatus")
 	}
 }
+
 
 var playerRing = [];
 
