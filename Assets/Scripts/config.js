@@ -1,13 +1,14 @@
 var Application = {
 	config:{
-		width:1000,
-		height:900
+		width:window.innerWidth,
+		height:window.innerHeight
 	},
 	debugMode:false,
 	gameplay:{
 		itemNbr:2,//nombre d'item a collecter
 		playerVisibleSensor:true, //acitve ou non les sens du chien
-		playerSensorAlpha:.5,
+		playerFSensorAlpha:.5,
+		playerFColor:0x61b2cd,
 		timerVisible:true,
 		debugSensorAlpha:.4, //alpha du sens
 		objectVisible:true,

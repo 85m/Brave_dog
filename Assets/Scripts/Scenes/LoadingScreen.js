@@ -22,8 +22,6 @@ Application.LoadingScreen.prototype = {
 		var image = this.add.image(Application.config.width / 2, Application.config.height / 2, 'technobel_logo');
 		image.anchor.setTo(0.5,0.5);
 
-
-
 		var _self = this;
 		setTimeout(function () {	
 			_self.state.start("Title");

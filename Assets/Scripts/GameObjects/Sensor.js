@@ -60,7 +60,7 @@ function playerFeedBackSensor(_game,_object){
     var currentDiameter = _object.sensor[ _object.sensor.length-1 ].circleData.diameter;
     _self.circleData = new Phaser.Circle(_object.x,_object.y,currentDiameter);
 
-    _self.beginFill(0x61b2cd,.8);
+    _self.beginFill(Application.gameplay.playerFColor, Application.gameplay.playerFSensorAlpha );
     _self.drawCircle(0,0,currentDiameter);
     _self.endFill();
 

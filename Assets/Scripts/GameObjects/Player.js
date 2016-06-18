@@ -55,6 +55,7 @@ function checkCollideWithObject(obj1,obj2){
 	cpt++;
 	if(cpt == 2){
 		cpt = 0;
+		//obj => item collided
 		Application.gameData.items.remove(obj2.sprite);
 		if(Application.gameData.layers < playerSensorArray.length ){
 			Application.gameData.layers++;
@@ -110,11 +111,10 @@ drawcircle demands the circle diameter
 
 function reduceCircle(_game,_circle,_radius){
 	var tw = _game.add.tween(_circle.circleData).to( { radius: _radius }, 1000, "Linear", true);
-
 	tw.onUpdateCallback(
 		function(twn,percent,twnData){
 			_circle.clear();
-			_circle.beginFill(0x61b2cd,.8);
+			_circle.beginFill(Application.gameplay.playerFColor,Application.gameplay.playerFSensorAlpha);
 			_circle.drawCircle(0, 0, _circle.circleData.diameter);
 			_circle.endFill();
 		}, this
@@ -127,7 +127,7 @@ function growCircle(_game,_circle,_radius){
 	tw.onUpdateCallback(
 		function(twn,percent,twnData){
 			_circle.clear();
-			_circle.beginFill(0x61b2cd,.8);
+			_circle.beginFill(Application.gameplay.playerFColor,Application.gameplay.playerFSensorAlpha);
 			_circle.drawCircle(0, 0, _circle.circleData.diameter);
 			_circle.endFill();
 		}, this

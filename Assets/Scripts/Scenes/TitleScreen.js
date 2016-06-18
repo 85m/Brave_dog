@@ -31,9 +31,6 @@ Application.TitleScreen.prototype = {
 		settings.setTextBounds(0, 0, 0, 0);
 		tutorial.setTextBounds(0, 0, 0, 0);
 		start.setTextBounds(0, 0, 0, 0);
-
-
-
 	}
 }
 
