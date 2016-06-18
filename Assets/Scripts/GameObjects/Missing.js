@@ -14,7 +14,7 @@ function Missing(_game,_x,_y){
     _self.visible = Application.gameplay.objectVisible;
 
 
-    layerScent(_game,_self);
+    addSensorToObject(_game,_self);
 
 
     return _self;

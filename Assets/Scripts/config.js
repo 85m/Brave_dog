@@ -6,9 +6,10 @@ var Application = {
 	debugMode:false,
 	gameplay:{
 		itemNbr:2,//nombre d'item a collecter
-		playerVisibleScent:true, //acitve ou non les sens du chien
+		playerVisibleSensor:true, //acitve ou non les sens du chien
+		playerSensorAlpha:.5,
 		timerVisible:true,
-		scentAlpha:.4, //alpha du sens
+		debugSensorAlpha:.4, //alpha du sens
 		objectVisible:true,
 		colliderGroup:{
 			environmentColGroup:null,
@@ -18,8 +19,8 @@ var Application = {
 		}
 	},
 	gameData:{
-		items:null,//store object for overlap
-		missing:null,
+		items:1,//store object for overlap
+		missing:1,
 		layers:1,
 		malus:null
 	}

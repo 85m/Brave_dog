@@ -27,7 +27,7 @@ Application.LevelScreen.prototype = {
 	},
 	update:function(){
 		//this.player.update();
-		scentCollisionWithObject(this.game);
+		sensorCollisionWithObject(this.game);
 	},
 	render:function(){
 
@@ -35,23 +35,3 @@ Application.LevelScreen.prototype = {
 		//game.debug.geom(playerRing[ playerRing.length-1 ].circleData,'rgba(255,0,0,.2)');
 	}
 }
-
-
-/*var outerCircleRadius = 50.0;
-//in create:
-outerCircleTween = game.add.tween(outerCircleRadius);
-outerCircleTween.to(50, 100, Phaser.Easing.Linear.None);
-outerCircleTween.start();
-//in update:
-outerCircleGraphics.clear();
-outerCircleGraphics.drawCircle(400, 450, outerCircleRadius);
-outerCircleGraphics.endFill();*/
-
-//this.burstCircle = new Phaser.Circle(0, 0, 0);
-//this.burstRing = game.add.graphics(0, 0);
-////Update loop:
-//this.burstCircle.radius = this.burstRadius / 2;
-//this.burstRadius+= 3;
-//this.burstRing.clear();
-//this.burstRing.lineStyle(64, 0xffffff);
-//this.burstRing.drawCircle(this.burstOrigin.x, this.burstOrigin.y, this.burstRadius);

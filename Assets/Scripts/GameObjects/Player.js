@@ -28,7 +28,7 @@ function Player(_game,_x,_y){
     g = _game;
     s = _self;
 
-    _self.scent = playerRing;
+    _self.sensor = playerRing;
      addLayerstoPlayer(_game,_self);
 
 	_self.update = function(){
@@ -46,7 +46,7 @@ function Player(_game,_x,_y){
 		else if (_self.controller.rightKey.isDown){
 			_self.body.moveRight(_self.speed);
 		}
-		moveUpdatePlayerScent(_self);
+		moveUpdatePlayerSensor(_self);
     }
     return _self;
 }
@@ -56,7 +56,7 @@ function checkCollideWithObject(obj1,obj2){
 	if(cpt == 2){
 		cpt = 0;
 		Application.gameData.items.remove(obj2.sprite);
-		if(Application.gameData.layers < playerScentArray.length ){
+		if(Application.gameData.layers < playerSensorArray.length ){
 			Application.gameData.layers++;
 			addLayerstoPlayer(g,s);
 		}
@@ -69,8 +69,8 @@ function checkCollideWithMissing(){
 }
 
 /* ************************************************************ */
-/* loop into all item  and check if an overlap is made with the player scent */
-function scentCollisionWithObject(_game){
+/* loop into all item  and check if an overlap is made with the player sensor */
+function sensorCollisionWithObject(_game){
 	var isCollide = false;
 	var r = playerRing[ playerRing.length-1];
 
@@ -117,7 +117,7 @@ function reduceCircle(_game,_circle,_radius){
 			_circle.beginFill(0x61b2cd,.8);
 			_circle.drawCircle(0, 0, _circle.circleData.diameter);
 			_circle.endFill();
-	}, this
+		}, this
 	);
 
 }
