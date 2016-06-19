@@ -30,9 +30,21 @@ Application.LevelScreen.prototype = {
 	update:function(){
 		//Application.gameplay.timer.Update();
 		sensorCollisionWithObject(this.game);
+		playerOverlapObject(this.player);
 	},
 	render:function(){
 		//this.game.debug.text('Time : ' + Application.gameplay.timer.Display() , 480, 32);
+		this.game.debug.text('Time : ' + Application.gameplay.itemNbr , 480, 32);
+		/*
+		* Afficher timer
+		* Afficher nombre d'objet a rammasser
+		* afficher le disparu
+		*
+		*
+		* */
+
+
+
 
 		//game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
 		//game.debug.geom(playerRing[ playerRing.length-1 ].circleData,'rgba(255,0,0,.2)');

@@ -5,12 +5,12 @@ var Application = {
 	},
 	debugMode:false,
 	gameplay:{
-		itemNbr:2,//nombre d'item a collecter
+		itemNbr:6,//nombre d'item a collecter
 		playerVisibleSensor:true, //acitve ou non les sens du chien
 		playerFSensorAlpha:.5,
 		playerFColor:0x61b2cd,
 		timerVisible:true,
-		debugSensorAlpha:.4, //alpha du sens
+		debugSensorAlpha:0, //alpha du sens
 		objectVisible:true,
 		colliderGroup:{
 			environmentColGroup:null,

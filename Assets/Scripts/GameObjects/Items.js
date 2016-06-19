@@ -4,8 +4,10 @@ function Item(_game,_x,_y){
 
 	var _self = _game.add.sprite(_x, _y, "book");
 	_game.physics.p2.enable([_self],false);
-	_self.name = "item_"+idx;
+    _self.name = "item_"+idx;
+    _self.alpha = 0;
     _self.body.fixedRotation = true;
+
     _self.body.static = true;
 
     _self.body.debug = Application.debugMode;
@@ -26,13 +28,16 @@ function itemGroups(_game){
     _items.physicsBodyType = Phaser.Physics.P2JS;
 
     for (var i = 0; i < Application.gameplay.itemNbr; i++){
-        var posX = objectPosTest[i].x;
-        var posY = objectPosTest[i].y;
+        var posX = _game.world.randomX;
+        var posY = _game.world.randomY;
+/*        var posX = objectPosTest[i].x;
+        var posY = objectPosTest[i].y;*/
 
         var anItem = Item(_game,posX,posY);
 
         addSensorToObject(_game,anItem);
         _items.add(anItem);
     }
+    _items.visible = true;
     return _items;
 }
