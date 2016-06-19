@@ -22,7 +22,7 @@ function Player(_game,_x,_y){
     _self.body.collideWorldBounds = true;
 
     _self.body.setCollisionGroup(playerColGroup);
-    _self.body.collides(objectColGroup, checkCollideWithObject, this);
+    //_self.body.collides(objectColGroup, checkCollideWithObject, this);
     _self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
     g = _game;

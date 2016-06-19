@@ -18,12 +18,14 @@ var Application = {
 			missingColGroup:null,
 			objectColGroup:null
 		}
+		,timer:null
 	},
 	gameData:{
 		items:1,//store object for overlap
 		missing:1,
 		layers:1,
-		malus:null
+		malus:null,
+		timer:null
 	},
 	settings:{
 		sensorBoolean:PlayerPrefs.Load("sensorStatus"),

@@ -24,14 +24,21 @@ Application.LevelScreen.prototype = {
 		Application.gameData.items 	= this.itemGroups;
 
 	    ply = this.player = Player(this.game,300,600);
+
+		//Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*5,false,gameOverScreen,this.game);
 	},
 	update:function(){
-		//this.player.update();
+		//Application.gameplay.timer.Update();
 		sensorCollisionWithObject(this.game);
 	},
 	render:function(){
+		//this.game.debug.text('Time : ' + Application.gameplay.timer.Display() , 480, 32);
 
 		//game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
 		//game.debug.geom(playerRing[ playerRing.length-1 ].circleData,'rgba(255,0,0,.2)');
 	}
+}
+
+function gameOverScreen(){
+	console.log('game over');
 }
