@@ -16,7 +16,6 @@ function Missing(_game,_x,_y){
 
     addSensorToObject(_game,_self);
 
-
     return _self;
 }
 

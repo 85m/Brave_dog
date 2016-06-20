@@ -14,6 +14,8 @@ Application.LevelScreen.prototype = {
 	    this.game.physics.p2.setImpactEvents(true);
 	    this.game.physics.p2.updateBoundsCollisionGroup();
 
+	    //this.bg = this.game.add.sprite(0,0,'bg');
+
 		environmentColGroup  	= game.physics.p2.createCollisionGroup();
 		playerColGroup        	= game.physics.p2.createCollisionGroup();
 		missingColGroup        	= game.physics.p2.createCollisionGroup();
@@ -21,12 +23,20 @@ Application.LevelScreen.prototype = {
 
 		this.itemGroups = itemGroups(this.game);
 
-		// this.missing 	= Missing(this.game,900,100);
-		//this.itemGroups.add(this.missing);
+		this.missing 	= Missing(this.game,900,100);
+		this.itemGroups.add(this.missing);
 
 		Application.gameData.items 	= this.itemGroups;
 
 	    ply = this.player = Player(this.game,300,600);
+
+
+ 		this.sprite = game.add.sprite(40, 200, 'dog');
+
+    	this.sprite.animations.add('walk');
+
+    	this.sprite.animations.play('walk', 10, true);
+
 
 		//Application.gameplay.timer = new Timer(Phaser.Timer.MINUTE*3,false,gameOverScreen,this.game);
 		//Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*15,false,this.gameOverScreen,this.game);

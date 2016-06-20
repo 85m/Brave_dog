@@ -8,7 +8,12 @@ Application.LoadingScreen.prototype = {
         this.load.image("technobel_logo","Assets/Graphics/Preload/logo_technobel.png");
         this.load.image("loading","Assets/Graphics/Preload/preloader-bar.png");
 
+        this.load.image("bg","Assets/Graphics/bg.jpg");
+
+        this.load.spritesheet('dog', 'Assets/Graphics/Player/dog1.jpg',160,200,3);
+
 		this.load.image('player', 'Assets/Graphics/Player/player.jpg');
+		
 		this.load.image('book', 'Assets/Graphics/Items/book.jpg');
 		this.load.image('missing', 'Assets/Graphics/Missing/missing.jpg');
 

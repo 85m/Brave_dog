@@ -2,7 +2,14 @@ var g,s, cpt = 0;
 
 function Player(_game,_x,_y){
 
+
+	_game.world.setBounds(0, 0, 2560, 1600);
+
 	var _self = _game.add.sprite(_x, _y, "player");
+
+
+	_game.camera.follow(_self);
+	//_game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
 
 	_self.normalSpeed 	= 120;
 	_self.runSpeed 		= 450;
@@ -39,7 +46,7 @@ function Player(_game,_x,_y){
 
     _self.body.setCollisionGroup(playerColGroup);
     //_self.body.collides(objectColGroup, checkCollideWithObject, this);
-    _self.body.collides(missingColGroup, checkCollideWithMissing, this);
+    //_self.body.collides(missingColGroup, checkCollideWithMissing, this);
 
     g = _game;
     s = _self;
