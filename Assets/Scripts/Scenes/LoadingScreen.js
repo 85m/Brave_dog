@@ -16,6 +16,12 @@ Application.LoadingScreen.prototype = {
 		this.load.image('contra2', 'Assets/Graphics/Map/contra2.png');
 		this.load.physics('physicsData', 'Assets/Graphics/Map/sprites.json');
 
+		this.game.load.audio('happy', ['Assets/audio/Dog-happy.mp3', 'Assets/audio/Dog-happy.ogg']);
+		this.game.load.audio('heartbeat', ['Assets/audio/heartbeat.mp3', 'Assets/audio/heartbeat.ogg']);
+		this.game.load.audio('heartstop', ['Assets/audio/heartbeat-stop.mp3', 'Assets/audio/heartbeat-stop.ogg']);
+
+		this.game.load.audio('lose', 'Assets/audio/Dog-lose.ogg');
+
 	},
 	create:function(){
 		console.log("Create LoadingScreen");

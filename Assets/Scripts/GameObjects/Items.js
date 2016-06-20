@@ -28,10 +28,10 @@ function itemGroups(_game){
     _items.physicsBodyType = Phaser.Physics.P2JS;
 
     for (var i = 0; i < Application.gameplay.itemNbr; i++){
-        var posX = _game.world.randomX;
-        var posY = _game.world.randomY;
-/*        var posX = objectPosTest[i].x;
-        var posY = objectPosTest[i].y;*/
+        // var posX = _game.world.randomX;
+        // var posY = _game.world.randomY;
+        var posX = objectPosTest[i].x;
+        var posY = objectPosTest[i].y;
 
         var anItem = Item(_game,posX,posY);
 

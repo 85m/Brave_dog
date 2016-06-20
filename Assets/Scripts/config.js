@@ -5,7 +5,7 @@ var Application = {
 	},
 	debugMode:false,
 	gameplay:{
-		itemNbr:6,//nombre d'item a collecter
+		itemNbr:3,//nombre d'item a collecter
 		playerVisibleSensor:true, //acitve ou non les sens du chien
 		playerFSensorAlpha:.5,
 		playerFColor:0x61b2cd,
@@ -21,7 +21,7 @@ var Application = {
 		,timer:null
 	},
 	gameData:{
-		items:1,//store object for overlap
+		items:null,//les items sont stocké ici
 		missing:1,
 		layers:1,
 		malus:null,
@@ -30,6 +30,10 @@ var Application = {
 	settings:{
 		sensorBoolean:PlayerPrefs.Load("sensorStatus"),
 		timerBoolean:PlayerPrefs.Load("timerStatus")
+	},
+	Audio:{
+		heart_beat:null,
+		heart_stop:null
 	}
 }
 

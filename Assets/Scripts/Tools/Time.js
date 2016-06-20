@@ -55,6 +55,8 @@ function Timer(_duration, _isRepeat, _Callback, _Game)
                 this.Clear();
             }
         }
+
+        return (this.duration - this.currentTime)/1000 |0;
     }
 
     this.Reset = function()

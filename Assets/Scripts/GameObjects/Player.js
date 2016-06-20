@@ -18,6 +18,17 @@ function Player(_game,_x,_y){
 		lootKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.A)
 	}
 
+	_self.audios = {
+		findGoodObject: 	_game.add.audio('happy'),
+		findMissing : 		_game.add.audio('happy'), //to change
+		findBadObject : 	_game.add.audio('happy'),
+		looseGame : 		_game.add.audio('lose')
+	}
+	_self.audios.findGoodObject.loop 	= false;
+	_self.audios.findMissing.loop 		= false;
+	_self.audios.findBadObject.loop 	= false;
+
+
 	_game.physics.p2.enable([_self],false);
 
     _self.name = "player";
@@ -41,9 +52,11 @@ function Player(_game,_x,_y){
 
 		if (_self.controller.shiftKey.isDown){
 			_self.currentSpeed = _self.runSpeed;
-			playerRing[ playerRing.length-1 ].alpha -= .1;
+			_self.audios.findGoodObject.volume = 0;
+			playerRing[ playerRing.length-1 ].alpha -= .001;
 		}else{
 			_self.currentSpeed = _self.normalSpeed;
+			_self.audios.findGoodObject.volume = 1;
 			playerRing[ playerRing.length-1 ].alpha = 1;
 		}
 
@@ -117,11 +130,15 @@ function checkObjectSensorOverlap(spriteA, spriteB) {
 /* ************************************************************ */
 /* ************************************************************ */
 
+/* Player overlap an invisible object */
 function playerOverlapObject(_player){
 	Application.gameData.items.forEach(function(item) {
 
 		var res = checkObjectOverlap(_player, item);
 		if(res.s){
+
+			_player.audios.findGoodObject.play();
+
 			if(_player.controller.digKey.isDown){
 				item.alpha = 1;
 			}
@@ -133,6 +150,7 @@ function playerOverlapObject(_player){
 				}
 			}
 		}
+		
 	});
 }
 
