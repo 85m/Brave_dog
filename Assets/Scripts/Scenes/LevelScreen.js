@@ -4,7 +4,7 @@ Application.LevelScreen = function(){
 
 var ply;
 var _self;
-
+var b;
 Application.LevelScreen.prototype = {
 	create:function(){
 
@@ -14,30 +14,34 @@ Application.LevelScreen.prototype = {
 	    this.game.physics.p2.setImpactEvents(true);
 	    this.game.physics.p2.updateBoundsCollisionGroup();
 
-	    //this.bg = this.game.add.sprite(0,0,'bg');
-
 		environmentColGroup  	= game.physics.p2.createCollisionGroup();
 		playerColGroup        	= game.physics.p2.createCollisionGroup();
 		missingColGroup        	= game.physics.p2.createCollisionGroup();
 		objectColGroup        	= game.physics.p2.createCollisionGroup();
 
+		/*  BACKGROUND */
+/*		b = this.bg = this.game.add.tileSprite(1024/2, 768/2, 1024,768, 'bg');
+		this.game.physics.p2.enable([ this.bg ], true);
+		this.bg.body.static = true;
+		this.bg.body.clearShapes();
+		this.bg.body.loadPolygon('bgPhysicsData', 'bg');
+		this.bg.body.setCollisionGroup(environmentColGroup);
+		this.bg.body.collides([environmentColGroup,playerColGroup]);*/
+
+
+		/*   ITEMS */
 		this.itemGroups = itemGroups(this.game);
 
-		this.missing 	= Missing(this.game,900,100);
-		this.itemGroups.add(this.missing);
+		/* THE MISSING IS A PART OF ITEMS GROUP */
+		//this.missing 	= Missing(this.game,900,100);
+		//this.itemGroups.add(this.missing);
 
 		Application.gameData.items 	= this.itemGroups;
 
-	    ply = this.player = Player(this.game,300,600);
+		/* THE PLAYER */
+		ply = this.player = Player(this.game,300,600);
 
-
- 		this.sprite = game.add.sprite(40, 200, 'dog');
-
-    	this.sprite.animations.add('walk');
-
-    	this.sprite.animations.play('walk', 10, true);
-
-
+		/* THE TIMER */
 		//Application.gameplay.timer = new Timer(Phaser.Timer.MINUTE*3,false,gameOverScreen,this.game);
 		//Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*15,false,this.gameOverScreen,this.game);
 
@@ -53,6 +57,11 @@ Application.LevelScreen.prototype = {
 	update:function(){
 		//var upd = Application.gameplay.timer.Update();
 		//launchSound(upd);
+
+		if(Application.gameplay.timer != null){
+			Application.gameplay.timer.Update();
+		}
+		
 
 		sensorCollisionWithObject(this.game);
 		playerOverlapObject(this.player);
@@ -77,9 +86,6 @@ Application.LevelScreen.prototype = {
 	}
 }
 
-
-
-
 var c = 0, a = 0;
 function launchSound(tm){
 	if(tm < 21){
@@ -88,5 +94,15 @@ function launchSound(tm){
 			Application.Audio.heart_beat.play();
 			c++;
 		}
+	}
+}
+
+
+
+function malus(){
+	if(sensorTimer == 0){
+		malusActif = false;
+		Application.gameplay.playerSensor.currentState = Application.gameplay.playerSensor.default;
+		sensorTimer++;
 	}
 }

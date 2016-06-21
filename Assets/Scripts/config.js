@@ -7,6 +7,10 @@ var Application = {
 	gameplay:{
 		itemNbr:3,//nombre d'item a collecter
 		playerVisibleSensor:true, //acitve ou non les sens du chien
+		playerSensor:{
+			default:.5,
+			currentState:.5
+		},
 		playerFSensorAlpha:.5,
 		playerFColor:0x61b2cd,
 		timerVisible:true,
@@ -42,3 +46,6 @@ var playerRing = [];
 
 /* FOR TEST */
 var objectPosTest = [{x:100,y:100},{x:200,y:800},{x:900,y:700}];
+
+var sensorTimer = 0;
+var malusActif = false;//need for deactivate the dog sound when we have malus for sensor

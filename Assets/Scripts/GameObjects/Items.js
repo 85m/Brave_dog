@@ -1,11 +1,12 @@
 var idx = 0;
 
-function Item(_game,_x,_y){
+function Item(_game,_x,_y,_type){
 
-	var _self = _game.add.sprite(_x, _y, "book");
+	var _self = _game.add.sprite(_x, _y, _type);
 	_game.physics.p2.enable([_self],false);
     _self.name = "item_"+idx;
-    _self.alpha = 0;
+    _self.alpha = .5;
+    _self.isGood = _type == 'book' ? true : false;
     _self.body.fixedRotation = true;
 
     _self.body.static = true;
@@ -26,6 +27,7 @@ function itemGroups(_game){
 	var _items = _game.add.group();
 	_items.enableBody = true;
     _items.physicsBodyType = Phaser.Physics.P2JS;
+    var type;
 
     for (var i = 0; i < Application.gameplay.itemNbr; i++){
         // var posX = _game.world.randomX;
@@ -33,7 +35,15 @@ function itemGroups(_game){
         var posX = objectPosTest[i].x;
         var posY = objectPosTest[i].y;
 
-        var anItem = Item(_game,posX,posY);
+        /*define wich object to show */
+        var nbr = _game.rnd.integerInRange(0, 100);
+        if(nbr < 25){
+            type = 'bBook';
+        }else{
+            type = 'book';
+        }
+
+        var anItem = Item(_game,posX,posY,type);
 
         addSensorToObject(_game,anItem);
         _items.add(anItem);
