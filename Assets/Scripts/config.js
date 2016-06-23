@@ -11,6 +11,7 @@ var Application = {
 			default:.5,
 			currentState:.5
 		},
+		malusTimer:30,
 		playerFSensorAlpha:.5,
 		playerFColor:0x61b2cd,
 		timerVisible:true,
@@ -43,6 +44,8 @@ var Application = {
 
 
 var playerRing = [];
+var layerIdx = 0;
+var g,s, cpt = 0;
 
 /* FOR TEST */
 var objectPosTest = [{x:100,y:100},{x:200,y:800},{x:900,y:700}];

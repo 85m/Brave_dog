@@ -27,8 +27,6 @@ function addSensorToObject(_game,_object){
     return _object;
 }
 
-
-var layerIdx = 0;
 function addLayerstoPlayer(_game,_object){
     //avoid the first pop => closesensor + feedback
     if(layerIdx > 0){

@@ -16,8 +16,8 @@ Application.LoadingScreen.prototype = {
         this.game.load.physics('bgPhysicsData', 'Assets/Graphics/Map/bg.json');
         
         /* PLAYER  */
-        this.load.image('player', 'Assets/Graphics/Player/player.jpg');
-        //this.load.spritesheet('dog', 'Assets/Graphics/Player/dog.png',40,40,12);
+        //this.load.image('player', 'Assets/Graphics/Player/player.jpg');
+        this.load.spritesheet('player', 'Assets/Graphics/Player/dog.png',40,40,12);
         /* MISSING  */
         this.load.image('missing', 'Assets/Graphics/Missing/missing.jpg');
 		
@@ -29,6 +29,7 @@ Application.LoadingScreen.prototype = {
 
 		/* AUDIO  */
 		this.game.load.audio('happy', ['Assets/audio/Dog-happy.mp3', 'Assets/audio/Dog-happy.ogg']);
+		this.game.load.audio('nohappy','Assets/audio/Dog-nohappy.ogg');
 		this.game.load.audio('heartbeat', ['Assets/audio/heartbeat.mp3', 'Assets/audio/heartbeat.ogg']);
 		this.game.load.audio('heartstop', ['Assets/audio/heartbeat-stop.mp3', 'Assets/audio/heartbeat-stop.ogg']);
 		this.game.load.audio('lose', 'Assets/audio/Dog-lose.ogg');
@@ -36,6 +37,9 @@ Application.LoadingScreen.prototype = {
 		/* TEST  */
 		this.game.load.image('contra2', 'Assets/Graphics/Map/contra2.png');
 		this.game.load.physics('physicsData', 'Assets/Graphics/Map/sprites.json');
+
+
+
 	},
 	create:function(){
 		console.log("Create LoadingScreen");

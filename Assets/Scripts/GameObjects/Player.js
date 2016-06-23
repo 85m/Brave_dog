@@ -1,4 +1,4 @@
-var g,s, cpt = 0;
+
 
 function Player(_game,_x,_y){
 	//_game.world.setBounds(0, 0, 2560, 1600);
@@ -7,10 +7,10 @@ function Player(_game,_x,_y){
 
 	//_self.scale.set(1);
 
-/*    _self.animations.add('move_down',  [0,1,2]);
+    _self.animations.add('move_down',  [0,1,2]);
     _self.animations.add('move_left',  [3,4,5]);
     _self.animations.add('move_right', [6,7,8]);
-    _self.animations.add('move_up',    [9,10,11]);*/
+    _self.animations.add('move_up',    [9,10,11]);
 
     _self.frame_normalSpeed 	= 5;
     _self.frame_runSpeed 		= 10;
@@ -37,14 +37,13 @@ function Player(_game,_x,_y){
 
 	_self.audios = {
 		findGoodObject: 	_game.add.audio('happy'),
+		findBadObject : 	_game.add.audio('nohappy'),
 		findMissing : 		_game.add.audio('happy'), //to change
-		findBadObject : 	_game.add.audio('happy'),
 		looseGame : 		_game.add.audio('lose')
 	}
 	_self.audios.findGoodObject.loop 	= false;
 	_self.audios.findMissing.loop 		= false;
 	_self.audios.findBadObject.loop 	= false;
-
 
 	_game.physics.p2.enable([_self],false);
 
@@ -55,8 +54,6 @@ function Player(_game,_x,_y){
     _self.body.collideWorldBounds = true;
 
     _self.body.setCollisionGroup(playerColGroup);
-    //_self.body.collides(objectColGroup, checkCollideWithObject, this);
-    //_self.body.collides(missingColGroup, checkCollideWithMissing, this);
     _self.body.collides(environmentColGroup, null, this);//just need to collide with environment
 
     g = _game;
@@ -68,49 +65,49 @@ function Player(_game,_x,_y){
 	_self.update = function(){
     	_self.body.setZeroVelocity();
 
+		if (_self.controller.shiftKey.isDown)//RUN
+		{
+			_self.currentSpeed 							= _self.runSpeed;
+			_self.frame_currentSpeed 					= _self.frame_runSpeed;
+			_self.audios.findGoodObject.volume 			= 0;
+			playerRing[ playerRing.length-1 ].alpha 	-= .05;
+		}
+		else
+		{
+			_self.currentSpeed 							= _self.normalSpeed;
+			_self.frame_currentSpeed 					= _self.frame_normalSpeed;
+			_self.audios.findGoodObject.volume 			= 1;
+			playerRing[ playerRing.length-1 ].alpha 	= 1;
 
-		if (_self.controller.shiftKey.isDown){
-			_self.currentSpeed = _self.runSpeed;
-			_self.audios.findGoodObject.volume = 0;
-			playerRing[ playerRing.length-1 ].alpha -= .05;
-
-			_self.frame_currentSpeed = _self.frame_runSpeed;
-
-		}else{
-			_self.currentSpeed = _self.normalSpeed;
-			_self.audios.findGoodObject.volume = 1;
-			playerRing[ playerRing.length-1 ].alpha = 1;
-
-			_self.frame_currentSpeed = _self.frame_normalSpeed;
 		}
 
 		if (_self.controller.upKey.isDown)
 		{
 			_self.body.moveUp(_self.currentSpeed);
-			//_self.animations.play('move_up', _self.frame_currentSpeed, true);
-			//_self.currentDirection = "UP";
+			_self.animations.play('move_up', _self.frame_currentSpeed, true);
+			_self.currentDirection = "UP";
 		}
 		else if (_self.controller.downKey.isDown)
 		{
 			_self.body.moveDown(_self.currentSpeed);
-			//_self.animations.play('move_down', _self.frame_currentSpeed, true);
-			//_self.currentDirection = "DOWN";
+			_self.animations.play('move_down', _self.frame_currentSpeed, true);
+			_self.currentDirection = "DOWN";
 		}
 		else if (_self.controller.leftKey.isDown)
 		{
 			_self.body.moveLeft(_self.currentSpeed);
-			//_self.animations.play('move_left', _self.frame_currentSpeed, true);
-			//_self.currentDirection = "LEFT";
+			_self.animations.play('move_left', _self.frame_currentSpeed, true);
+			_self.currentDirection = "LEFT";
 		}
 		else if (_self.controller.rightKey.isDown)
 		{
 			_self.body.moveRight(_self.currentSpeed);
-			//_self.animations.play('move_right', _self.frame_currentSpeed, true);
-			//_self.currentDirection = "RIGHT";
+			_self.animations.play('move_right', _self.frame_currentSpeed, true);
+			_self.currentDirection = "RIGHT";
 		}
 		else{
 
-/*			if(_self.currentDirection == "UP")
+			if(_self.currentDirection == "UP")
             {
                 _self.animations.frame = 10;
             }
@@ -127,9 +124,7 @@ function Player(_game,_x,_y){
                 _self.animations.frame = 7;
             }
             _self.currentDirection = null;
-
-
-			_self.animations.stop();*/
+			_self.animations.stop();
 		}
 		moveUpdatePlayerSensor(_self);
     }
@@ -140,7 +135,7 @@ function Player(_game,_x,_y){
 /* loop into all item  and check if an overlap is made with the player sensor */
 function sensorCollisionWithObject(_game){
 	var isCollide = false;
-	var r = playerRing[ playerRing.length-1];
+	var sensorCircle = playerRing[ playerRing.length-1];
 
 	//comme on modifie le circleData du feedback nous de vons recuperer la valeur du
 	//precedent circleData pour faire correspondre avec celui du feedback
@@ -151,12 +146,12 @@ function sensorCollisionWithObject(_game){
 		var res = checkObjectSensorOverlap(playerRing[ playerRing.length-1 ], item);
 		if(res){
 			//console.log('overlap 1');
-			reduceCircle(_game,r,minimumSensorSize/2);
+			reduceCircle(_game,sensorCircle,minimumSensorSize/2);
 			isCollide  = true;
 		}
 	});
 	if(!isCollide){
-		growCircle(_game,r,currentSensorSize);
+		growCircle(_game,sensorCircle,currentSensorSize);
 	}
 }
 
@@ -173,7 +168,6 @@ function checkObjectSensorOverlap(spriteA, spriteB) {
 /* Player overlap an invisible object */
 function playerOverlapObject(_player){
 	Application.gameData.items.forEach(function(item) {
-
 		var res = checkObjectOverlap(_player, item);
 		if(res.s){
 			//console.log('overlap 2');
@@ -185,34 +179,52 @@ function playerOverlapObject(_player){
 				item.alpha = 1;
 			}
 			if(item.alpha == 1 && _player.controller.lootKey.isDown){
-				// Application.gameData.items.remove(item);
-				item.destroy();
-
-
-				//check if object is good or not
+				//if object is good then add sensor layer
 				if(item.isGood){
 					if(Application.gameData.layers < playerSensorArray.length ){
 						Application.gameData.layers++;
 						addLayerstoPlayer(g,s);
 					}
-				}else{
+
+				}else if(item.name == "missing"){
+					console.log('find and finish');
+					_player.audios.findBadObject.stop();
+					_player.audios.findBadObject.volume = 1;
+					_player.audios.findGoodObject.play();
+
+					gameFinished();
+				}
+				else{//else alpha = 0 for timer length
 					//console.log('sensor disapear');
 					sensorTimer = 0;
 					malusActif = true;
-					Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*25,false,malus,game);
+					Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*Application.gameplay.malusTimer,false,malus,game);
+					console.log('enter');
 					Application.gameplay.playerSensor.currentState = 0;
+					_player.audios.findGoodObject.stop();
+					_player.audios.findBadObject.volume = .5;
+					_player.audios.findBadObject.play();
 				}
+
+				//FIND THE MISSING
+/*				if(item.name == "missing"){
+					//affiche message de felicitation
+					//affiche en combien de temps le jeu est fini
+					console.log('find and finish');
+					_player.audios.findBadObject.stop();
+					_player.audios.findBadObject.volume = 1;
+					_player.audios.findGoodObject.play();
+
+
+					gameFinished();
+
+				}*/
+				item.destroy();
+
 			}
 		}
 	});
 }
-
-
-
-
-
-
-
 function checkObjectOverlap(p,o){
 	var boundsA = p.getBounds();
 	var boundsB = o.getBounds();
@@ -252,3 +264,47 @@ function growCircle(_game,_circle,_radius){
 	);
 }
 /* ************************************************************ */
+
+
+function gameFinished()
+{
+	//game.paused = true;
+
+	var graphics = game.add.graphics(0, 0);
+
+
+		var width = 750;
+		var height = 250;
+		var x = Application.config.width/2 - width/2;
+		var y = Application.config.height/2 - height/2;
+
+
+		console.log(x,y)
+
+	// draw a rectangle
+	graphics.beginFill(0x000000, 1);
+    graphics.lineStyle(2, 0xFF700B, 1);
+    graphics.drawRect(x, y, width, height);
+    graphics.endFill();
+
+    var style = { font: "25px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
+
+    var congratsTxt = "Tu as sauvé la personne disparu";
+    var infosTime = "Cela t'as pris : ";
+    var menuBtn = ""
+
+
+
+    game.add.text(x + 50, y + 50 , "Félicitation :)", style);
+    game.add.text(x + 50, y + 90 , congratsTxt, style);
+    game.add.text(x + 50, y + 130 , infosTime + "2:00", style);
+
+    var retourAccueil = this.game.add.text(x+width-130, y+height-50 , "Accueil", style);
+    retourAccueil.inputEnabled = true;
+    retourAccueil.events.onInputOver.add(returntoTitle, this);
+}
+
+function returntoTitle(){
+	//game.paused = false;
+	game.state.start('Title');
+}

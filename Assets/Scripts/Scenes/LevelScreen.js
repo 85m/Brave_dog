@@ -4,8 +4,14 @@ Application.LevelScreen = function(){
 
 var ply;
 var _self;
-var b;
+var bg;
 Application.LevelScreen.prototype = {
+	preload:function(){
+		_self = null;
+		this.player = null;
+		this.itemGroups = null;
+		this.missing = null;
+	},
 	create:function(){
 
 		_self = this;
@@ -30,16 +36,17 @@ Application.LevelScreen.prototype = {
 
 
 		/*   ITEMS */
-		this.itemGroups = itemGroups(this.game);
+		this.itemGroups = new itemGroups(this.game);
 
 		/* THE MISSING IS A PART OF ITEMS GROUP */
-		//this.missing 	= Missing(this.game,900,100);
-		//this.itemGroups.add(this.missing);
+		this.missing 	= new Missing(this.game,500,600);
+		this.itemGroups.add(this.missing);
 
 		Application.gameData.items 	= this.itemGroups;
 
 		/* THE PLAYER */
-		ply = this.player = Player(this.game,300,600);
+		ply = this.player = new Player(this.game,300,600);
+		console.log(this.player);
 
 		/* THE TIMER */
 		//Application.gameplay.timer = new Timer(Phaser.Timer.MINUTE*3,false,gameOverScreen,this.game);
@@ -49,6 +56,11 @@ Application.LevelScreen.prototype = {
 		Application.Audio.heart_stop = this.game.add.audio('heartstop');
 		Application.Audio.heart_beat.loop = true;
 		Application.Audio.heart_stop.loop = false;
+
+		//INFO
+		var style = { font: "20px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
+		game.add.text(Application.config.width - 200, Application.config.height - 100 , "X : Creuser", style);
+		game.add.text(Application.config.width - 200, Application.config.height - 125 , "A : Loot", style);
 		
 	},
 	gameOverScreen:function(){

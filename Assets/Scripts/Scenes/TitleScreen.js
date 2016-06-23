@@ -6,6 +6,17 @@ Application.TitleScreen.prototype = {
 	preload: function() {
 		console.log("Preload TitleScreen");
 
+		/*RESET ALL*/
+		Application.gameData.items = null;
+		Application.gameData.timer = null;
+		//playerRing.length = 0;
+		while(playerRing.length > 0) {
+			playerRing.pop();
+		}
+		layerIdx = c = a = 0;
+		g,s, cpt = 0;
+		malusActif = false;
+		console.log(Application.gameData.items, playerRing);
 	},
 	create:function(){
 		console.log("Create TitleScreen");
