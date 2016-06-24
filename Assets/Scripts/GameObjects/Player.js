@@ -57,8 +57,10 @@ function Player(_x,_y){
     _self.name = "player";
     _self.sensor = [];
     _self.malusActif = false;
+    _self.malusTimer = null;
 
-     addLayerstoPlayer(_self);
+    /* Add first layers */
+    addLayerstoPlayer(_self);
 
 	_self.update = function(){
     	_self.body.setZeroVelocity();
@@ -189,7 +191,7 @@ function Player(_x,_y){
 						//else alpha = 0 for timer length
 						sensorTimer = 0;
 						_self.malusActif = true;
-						Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*Application.gameplay.malusTimer,false,malus,game);
+						_self.malusTimer = new Timer(Phaser.Timer.SECOND* 5 ,false, _self.manageMalus,game);
 						Application.gameplay.playerSensor.currentState = 0;
 						_self.audio.findGoodObject.stop();
 						_self.audio.findBadObject.volume = .5;
@@ -200,6 +202,13 @@ function Player(_x,_y){
     		}
     	});
     }//end overlapItem
+
+
+    /* Manage malus of player */
+    _self.manageMalus = function(){
+		_self.malusActif = false;
+		Application.gameplay.playerSensor.currentState = Application.gameplay.playerSensor.default;
+    }
 
 	/*
 	feedback circle grow or reduce

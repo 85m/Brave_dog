@@ -32,7 +32,7 @@ function itemGroups(){
 
         /*define wich object to show */
         var nbr = game.rnd.integerInRange(0, 100);
-        if(nbr < 25){
+        if(nbr < 50){
             type = 'bBook';//bad
         }else{
             type = 'book';//good

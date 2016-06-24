@@ -42,13 +42,14 @@ var Application = {
 	}
 }
 
-
-var playerRing = [];
 var layerIdx = 0;
 var g,s, cpt = 0;
 
 /* FOR TEST */
 var objectPosTest = [{x:100,y:100},{x:200,y:800},{x:900,y:700}];
 
-var sensorTimer = 0;
-var malusActif = false;//need for deactivate the dog sound when we have malus for sensor
+
+
+var PlayerConf ={}; 
+var ItemsConf ={}; 
+var SensorConf ={};

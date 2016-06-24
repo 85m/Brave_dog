@@ -3,8 +3,8 @@ Application.LevelScreen = function(){
 }
 
 var ply;
-var _self;
-var bg;
+
+
 Application.LevelScreen.prototype = {
 	preload:function(){
 		_self = null;
@@ -14,7 +14,6 @@ Application.LevelScreen.prototype = {
 	},
 	create:function(){
 
-		_self = this;
 		console.log("Create LevelScreen");
 	    this.game.physics.startSystem(Phaser.Physics.P2JS);
 	    this.game.physics.p2.setImpactEvents(true);
@@ -39,23 +38,17 @@ Application.LevelScreen.prototype = {
 		this.itemGroups = new itemGroups();
 
 		/* THE MISSING IS A PART OF ITEMS GROUP */
-		//this.missing 	= new Missing(this.game,500,600);
-		//this.itemGroups.add(this.missing);
+		this.missing 	= new Missing(500,600);
+		this.itemGroups.add(this.missing);
 
-		Application.gameData.items 	= this.itemGroups;
+		Application.gameData.items = this.itemGroups;
 
 		/* THE PLAYER */
 		ply = this.player = new Player(300,600);
-		//console.log(this.player);
 
 		/* THE TIMER */
 		//Application.gameplay.timer = new Timer(Phaser.Timer.MINUTE*3,false,gameOverScreen,this.game);
 		//Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*15,false,this.gameOverScreen,this.game);
-
-		Application.Audio.heart_beat = this.game.add.audio('heartbeat');
-		Application.Audio.heart_stop = this.game.add.audio('heartstop');
-		Application.Audio.heart_beat.loop = true;
-		Application.Audio.heart_stop.loop = false;
 
 		//INFO
 		var style = { font: "20px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
@@ -64,17 +57,16 @@ Application.LevelScreen.prototype = {
 		
 	},
 	gameOverScreen:function(){
-		_self.state.start('GameOver');
+		game.state.start('GameOver');
 	},
 	update:function(){
-		//var upd = Application.gameplay.timer.Update();
-		//launchSound(upd);
-
-		if(Application.gameplay.timer != null){
-			Application.gameplay.timer.Update();
-		}
 		this.player.sensorColSensorItem();
 		this.player.overlapItem();
+
+		if(this.player.malusTimer != null){
+			this.player.malusTimer.Update();
+		}
+		
 	},
 	render:function(){
 
@@ -93,26 +85,5 @@ Application.LevelScreen.prototype = {
 
 		//game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
 		//game.debug.geom(playerRing[ playerRing.length-1 ].circleData,'rgba(255,0,0,.2)');
-	}
-}
-
-var c = 0, a = 0;
-function launchSound(tm){
-	if(tm < 21){
-		if(c == 0){
-			//console.log('test');
-			Application.Audio.heart_beat.play();
-			c++;
-		}
-	}
-}
-
-
-
-function malus(){
-	if(sensorTimer == 0){
-		malusActif = false;
-		Application.gameplay.playerSensor.currentState = Application.gameplay.playerSensor.default;
-		sensorTimer++;
 	}
 }

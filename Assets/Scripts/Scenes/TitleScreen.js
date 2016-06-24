@@ -9,14 +9,8 @@ Application.TitleScreen.prototype = {
 		/*RESET ALL*/
 		Application.gameData.items = null;
 		Application.gameData.timer = null;
-		//playerRing.length = 0;
-		while(playerRing.length > 0) {
-			playerRing.pop();
-		}
-		layerIdx = c = a = 0;
-		g,s, cpt = 0;
-		malusActif = false;
-		console.log(Application.gameData.items, playerRing);
+		c = a = 0;
+		cpt = 0;
 	},
 	create:function(){
 		console.log("Create TitleScreen");
