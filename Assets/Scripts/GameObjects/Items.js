@@ -1,10 +1,8 @@
-var idx = 0;
-
-function Item(_game,_x,_y,_type){
-	var _self = _game.add.sprite(_x, _y, _type);
-	_game.physics.p2.enable([_self],false);
-    _self.name = "item_"+idx;
-    _self.alpha = 0;
+function Item(_x,_y,_type,_cpt){
+	var _self = game.add.sprite(_x, _y, _type);
+	game.physics.p2.enable([_self],false);
+    _self.name = "item_"+_cpt;
+    _self.alpha = .5;
     _self.isGood = _type == 'book' ? true : false;
     _self.body.fixedRotation = true;
     _self.body.static = true;
@@ -15,35 +13,34 @@ function Item(_game,_x,_y,_type){
     _self.body.setCollisionGroup(objectColGroup);
     _self.body.collides([playerColGroup,objectColGroup]);
     _self.visible = Application.gameplay.objectVisible;
-
-    idx++;
     return _self;
 }
-
-
-function itemGroups(_game){
-	var _items = _game.add.group();
+function itemGroups(){
+	var _items = game.add.group();
 	_items.enableBody = true;
     _items.physicsBodyType = Phaser.Physics.P2JS;
     var type;
 
     for (var i = 0; i < Application.gameplay.itemNbr; i++){
-        //var posX = _game.world.randomX;
-        //var posY = _game.world.randomY;
+        //var posX = game.world.randomX;
+        //var posY = game.world.randomY;
+
+
+        //FOR TEST I GIVE POSITION
         var posX = objectPosTest[i].x;
         var posY = objectPosTest[i].y;
 
         /*define wich object to show */
-        var nbr = _game.rnd.integerInRange(0, 100);
+        var nbr = game.rnd.integerInRange(0, 100);
         if(nbr < 25){
-            type = 'bBook';
+            type = 'bBook';//bad
         }else{
-            type = 'book';
+            type = 'book';//good
         }
 
-        var anItem = Item(_game,posX,posY,type);
-
-        addSensorToObject(_game,anItem);
+        //x,y of item , type of item(good/bad), cpt of item
+        var anItem = Item(posX,posY,type,i);
+        addSensorToItem(anItem);
         _items.add(anItem);
     }
     _items.visible = true;

@@ -36,17 +36,17 @@ Application.LevelScreen.prototype = {
 
 
 		/*   ITEMS */
-		this.itemGroups = new itemGroups(this.game);
+		this.itemGroups = new itemGroups();
 
 		/* THE MISSING IS A PART OF ITEMS GROUP */
-		this.missing 	= new Missing(this.game,500,600);
-		this.itemGroups.add(this.missing);
+		//this.missing 	= new Missing(this.game,500,600);
+		//this.itemGroups.add(this.missing);
 
 		Application.gameData.items 	= this.itemGroups;
 
 		/* THE PLAYER */
-		ply = this.player = new Player(this.game,300,600);
-		console.log(this.player);
+		ply = this.player = new Player(300,600);
+		//console.log(this.player);
 
 		/* THE TIMER */
 		//Application.gameplay.timer = new Timer(Phaser.Timer.MINUTE*3,false,gameOverScreen,this.game);
@@ -73,10 +73,8 @@ Application.LevelScreen.prototype = {
 		if(Application.gameplay.timer != null){
 			Application.gameplay.timer.Update();
 		}
-		
-
-		sensorCollisionWithObject(this.game);
-		playerOverlapObject(this.player);
+		this.player.sensorColSensorItem();
+		this.player.overlapItem();
 	},
 	render:function(){
 

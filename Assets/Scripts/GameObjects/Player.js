@@ -1,9 +1,7 @@
+function Player(_x,_y){
+	//game.world.setBounds(0, 0, 2560, 1600);
 
-
-function Player(_game,_x,_y){
-	//_game.world.setBounds(0, 0, 2560, 1600);
-
-	var _self = _game.add.sprite(_x, _y, "player");
+	var _self = game.add.sprite(_x, _y, "player");
 
 	//_self.scale.set(1);
 
@@ -18,34 +16,36 @@ function Player(_game,_x,_y){
     _self.currentDirection		= null;
 
 
-	//_game.camera.follow(_self);
-	//_game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
+	//game.camera.follow(_self);
+	//game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
 
 	_self.normalSpeed 	= 120;
 	_self.runSpeed 		= 450;
 	_self.currentSpeed = _self.normalSpeed;
 
 	_self.controller = {
-		upKey: 		_game.input.keyboard.addKey(Phaser.Keyboard.UP),
-		downKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
-		leftKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
-		rightKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
-		shiftKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
-		digKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.X),
-		lootKey: 	_game.input.keyboard.addKey(Phaser.Keyboard.A)
+		upKey: 		game.input.keyboard.addKey(Phaser.Keyboard.UP),
+		downKey: 	game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+		leftKey: 	game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
+		rightKey: 	game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
+		shiftKey: 	game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
+		digKey: 	game.input.keyboard.addKey(Phaser.Keyboard.X),
+		lootKey: 	game.input.keyboard.addKey(Phaser.Keyboard.A)
 	}
 
-	_self.audios = {
-		findGoodObject: 	_game.add.audio('happy'),
-		findBadObject : 	_game.add.audio('nohappy'),
-		findMissing : 		_game.add.audio('happy'), //to change
-		looseGame : 		_game.add.audio('lose')
+	_self.audio = {
+		findGoodObject: 	game.add.audio('happy'),
+		findBadObject : 	game.add.audio('nohappy'),
+		findMissing : 		game.add.audio('happy'), //to change
+		looseGame : 		game.add.audio('lose')
 	}
-	_self.audios.findGoodObject.loop 	= false;
-	_self.audios.findMissing.loop 		= false;
-	_self.audios.findBadObject.loop 	= false;
+	_self.audio.findGoodObject.loop 	= false;
+	_self.audio.findMissing.loop 		= false;
+	_self.audio.findBadObject.loop 		= false;
 
-	_game.physics.p2.enable([_self],false);
+
+
+	game.physics.p2.enable([_self],false);
 
     _self.name = "player";
     _self.body.fixedRotation = true;
@@ -56,11 +56,11 @@ function Player(_game,_x,_y){
     _self.body.setCollisionGroup(playerColGroup);
     _self.body.collides(environmentColGroup, null, this);//just need to collide with environment
 
-    g = _game;
     s = _self;
 
-    _self.sensor = playerRing;
-     addLayerstoPlayer(_game,_self);
+    _self.sensor = [];
+
+     addLayerstoPlayer(_self);
 
 	_self.update = function(){
     	_self.body.setZeroVelocity();
@@ -69,15 +69,15 @@ function Player(_game,_x,_y){
 		{
 			_self.currentSpeed 							= _self.runSpeed;
 			_self.frame_currentSpeed 					= _self.frame_runSpeed;
-			_self.audios.findGoodObject.volume 			= 0;
-			playerRing[ playerRing.length-1 ].alpha 	-= .05;
+			_self.audio.findGoodObject.volume 			= 0;
+			_self.sensor[ _self.sensor.length-1 ].alpha 	-= .05;
 		}
 		else
 		{
 			_self.currentSpeed 							= _self.normalSpeed;
 			_self.frame_currentSpeed 					= _self.frame_normalSpeed;
-			_self.audios.findGoodObject.volume 			= 1;
-			playerRing[ playerRing.length-1 ].alpha 	= 1;
+			_self.audio.findGoodObject.volume 			= 1;
+			_self.sensor[ _self.sensor.length-1 ].alpha 	= 1;
 
 		}
 
@@ -127,108 +127,87 @@ function Player(_game,_x,_y){
 			_self.animations.stop();
 		}
 		moveUpdatePlayerSensor(_self);
+    }//update
+
+    /* loop into all item  and check if an overlap is made with the player sensor */
+    _self.sensorColSensorItem = function(){
+    	var isCollide = false;
+    	var sensorCircle = _self.sensor[ _self.sensor.length-1 ];
+    	//comme on modifie le circleData du feedback nous de vons recuperer la valeur du
+    	//precedent circleData pour faire correspondre avec celui du feedback
+    	var currentSensorSize = _self.sensor[ _self.sensor.length-2 ].circleData.radius;
+    	var minimumSensorSize = _self.sensor[ 0 ].circleData.radius;
+
+    	Application.gameData.items.forEach(function(item) {
+    		var res = checkObjectSensorOverlap(_self.sensor[ _self.sensor.length-1 ], item);
+    		if(res){
+				//console.log('overlap 1');
+				reduceCircle(sensorCircle,minimumSensorSize/2);
+				isCollide  = true;
+			}
+		});
+		if(!isCollide){
+			growCircle(sensorCircle,currentSensorSize);
+		}
+    }//end sensorColSensorItem
+
+    /* Player overlap an invisible object */
+    _self.overlapItem = function(){
+    	Application.gameData.items.forEach(function(item) {
+    		var res = checkObjectOverlap(_self, item);
+    		if(res){
+
+				if(!malusActif){ _self.audio.findGoodObject.play(); }
+
+				if(_self.controller.digKey.isDown){ item.alpha = 1; }
+
+				if(item.alpha == 1 && _self.controller.lootKey.isDown){
+					//if object is good then add sensor layer
+					if(item.isGood){
+						if(Application.gameData.layers < playerSensorArray.length ){
+							Application.gameData.layers++;
+							addLayerstoPlayer(_self);
+						}
+
+					}else if(item.name == "missing"){
+						_self.audio.findBadObject.stop();
+						_self.audio.findBadObject.volume = 1;
+						_self.audio.findGoodObject.play();
+						gameFinished();
+
+					}else{
+						//else alpha = 0 for timer length
+						sensorTimer = 0;
+						malusActif = true;
+						Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*Application.gameplay.malusTimer,false,malus,game);
+						Application.gameplay.playerSensor.currentState = 0;
+						_self.audio.findGoodObject.stop();
+						_self.audio.findBadObject.volume = .5;
+						_self.audio.findBadObject.play();
+					}
+					item.destroy();
+				}	
+    		}
+    	});
     }
+    //end overlapItem
     return _self;
 }
 
 /* ************************************************************ */
-/* loop into all item  and check if an overlap is made with the player sensor */
-function sensorCollisionWithObject(_game){
-	var isCollide = false;
-	var sensorCircle = playerRing[ playerRing.length-1];
-
-	//comme on modifie le circleData du feedback nous de vons recuperer la valeur du
-	//precedent circleData pour faire correspondre avec celui du feedback
-	var currentSensorSize = playerRing[ playerRing.length-2 ].circleData.radius;
-	var minimumSensorSize = playerRing[ 0 ].circleData.radius;
-
-	Application.gameData.items.forEach(function(item) {
-		var res = checkObjectSensorOverlap(playerRing[ playerRing.length-1 ], item);
-		if(res){
-			//console.log('overlap 1');
-			reduceCircle(_game,sensorCircle,minimumSensorSize/2);
-			isCollide  = true;
-		}
-	});
-	if(!isCollide){
-		growCircle(_game,sensorCircle,currentSensorSize);
-	}
-}
-
 /* overlap between circle */
-function checkObjectSensorOverlap(spriteA, spriteB) {
-	var a = spriteA.circleData;
-	var b = spriteB.children[0].circleData;
+function checkObjectSensorOverlap(_player, _item) {
+	var a = _player.circleData;
+	var b = _item.children[0].circleData;
 	return Phaser.Circle.intersects(a, b);
 }
 /* ************************************************************ */
 /* ************************************************************ */
 /* ************************************************************ */
-
-/* Player overlap an invisible object */
-function playerOverlapObject(_player){
-	Application.gameData.items.forEach(function(item) {
-		var res = checkObjectOverlap(_player, item);
-		if(res.s){
-			//console.log('overlap 2');
-			if(!malusActif){
-				_player.audios.findGoodObject.play();
-			}			
-
-			if(_player.controller.digKey.isDown){
-				item.alpha = 1;
-			}
-			if(item.alpha == 1 && _player.controller.lootKey.isDown){
-				//if object is good then add sensor layer
-				if(item.isGood){
-					if(Application.gameData.layers < playerSensorArray.length ){
-						Application.gameData.layers++;
-						addLayerstoPlayer(g,s);
-					}
-
-				}else if(item.name == "missing"){
-					console.log('find and finish');
-					_player.audios.findBadObject.stop();
-					_player.audios.findBadObject.volume = 1;
-					_player.audios.findGoodObject.play();
-
-					gameFinished();
-				}
-				else{//else alpha = 0 for timer length
-					//console.log('sensor disapear');
-					sensorTimer = 0;
-					malusActif = true;
-					Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*Application.gameplay.malusTimer,false,malus,game);
-					console.log('enter');
-					Application.gameplay.playerSensor.currentState = 0;
-					_player.audios.findGoodObject.stop();
-					_player.audios.findBadObject.volume = .5;
-					_player.audios.findBadObject.play();
-				}
-
-				//FIND THE MISSING
-/*				if(item.name == "missing"){
-					//affiche message de felicitation
-					//affiche en combien de temps le jeu est fini
-					console.log('find and finish');
-					_player.audios.findBadObject.stop();
-					_player.audios.findBadObject.volume = 1;
-					_player.audios.findGoodObject.play();
-
-
-					gameFinished();
-
-				}*/
-				item.destroy();
-
-			}
-		}
-	});
-}
-function checkObjectOverlap(p,o){
-	var boundsA = p.getBounds();
-	var boundsB = o.getBounds();
-	return {s:Phaser.Rectangle.intersects(boundsA, boundsB),i: o.name};
+function checkItemOverlap(_player,_item){
+	var boundsA = _player.getBounds();
+	var boundsB = _item.getBounds();
+	return Phaser.Rectangle.intersects(boundsA, boundsB);
 }
 
 /* ************************************************************ */
@@ -238,11 +217,11 @@ function checkObjectOverlap(p,o){
 circle grow or reduce
 
 Explain:
-the value of radius is changin in the tween, with the tween callback we clear and redraw each time the circle
+the value of radius is changing in the tween, with the tween callback we clear and redraw each time the circle
 drawcircle demands the circle diameter
 */
-function reduceCircle(_game,_circle,_radius){
-	var tw = _game.add.tween(_circle.circleData).to( { radius: _radius }, 1000, "Linear", true);
+function reduceCircle(_circle,_radius){
+	var tw = game.add.tween(_circle.circleData).to( { radius: _radius }, 1000, "Linear", true);
 	tw.onUpdateCallback(
 		function(twn,percent,twnData){
 			_circle.clear();
@@ -252,8 +231,8 @@ function reduceCircle(_game,_circle,_radius){
 		}, this
 	);
 }
-function growCircle(_game,_circle,_radius){
-	var tw = _game.add.tween(_circle.circleData).to( { radius: _radius }, 500, "Linear", true);
+function growCircle(_circle,_radius){
+	var tw = game.add.tween(_circle.circleData).to( { radius: _radius }, 500, "Linear", true);
 	tw.onUpdateCallback(
 		function(twn,percent,twnData){
 			_circle.clear();
