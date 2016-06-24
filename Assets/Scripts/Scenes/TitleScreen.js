@@ -5,12 +5,6 @@ Application.TitleScreen = function(){
 Application.TitleScreen.prototype = {
 	preload: function() {
 		console.log("Preload TitleScreen");
-
-		/*RESET ALL*/
-		Application.gameData.items = null;
-		Application.gameData.timer = null;
-		c = a = 0;
-		cpt = 0;
 	},
 	create:function(){
 		console.log("Create TitleScreen");

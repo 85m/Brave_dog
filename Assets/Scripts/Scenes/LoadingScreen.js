@@ -18,6 +18,10 @@ Application.LoadingScreen.prototype = {
         /* PLAYER  */
         //this.load.image('player', 'Assets/Graphics/Player/player.jpg');
         this.load.spritesheet('player', 'Assets/Graphics/Player/dog.png',40,40,12);
+
+        /* GUI*/
+        this.load.spritesheet('heart', 'Assets/Graphics/GUI/heart.png',32,32,2);
+
         /* MISSING  */
         this.load.image('missing', 'Assets/Graphics/Missing/missing.jpg');
 		

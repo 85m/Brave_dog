@@ -23,8 +23,8 @@ Application.SettingScreen.prototype = {
         SensorStatus = this.game.add.text(centerX+150, centerY , "", style);
         TimerStatus = this.game.add.text(centerX+150, centerY+50 , "", style);
 
-        var s = Application.settings.sensorBoolean === 'true' ? "YES" : "NO";
-        var t = Application.settings.timerBoolean === 'true' ? "YES" : "NO";
+        var s = Application.gameplay.settings.sensorBoolean === 'true' ? "YES" : "NO";
+        var t = Application.gameplay.settings.timerBoolean === 'true' ? "YES" : "NO";
         SensorStatus.setText(s);
         TimerStatus.setText(t);
 
@@ -44,16 +44,15 @@ function returnTitle(){
     this.state.start('Title');
 }
 function changeSensorStatus(){
-    Application.settings.sensorBoolean = !Application.settings.sensorBoolean;
-    var val = Application.settings.sensorBoolean ? "YES" : "NO";
+    Application.gameplay.settings.sensorBoolean = !Application.gameplay.settings.sensorBoolean;
+    var val = Application.gameplay.settings.sensorBoolean ? "YES" : "NO";
     SensorStatus.setText(val);
-    PlayerPrefs.Save('sensorStatus',Application.settings.sensorBoolean);
+    PlayerPrefs.Save('sensorStatus',Application.gameplay.settings.sensorBoolean);
 }
 
 function changeTimerStatus(){
-    Application.settings.timerBoolean = !Application.settings.timerBoolean;
-    var val = Application.settings.timerBoolean ? "YES" : "NO";
+    Application.gameplay.settings.timerBoolean = !Application.gameplay.settings.timerBoolean;
+    var val = Application.gameplay.settings.timerBoolean ? "YES" : "NO";
     TimerStatus.setText(val);
-    PlayerPrefs.Save('timerStatus',Application.settings.timerBoolean);
-
+    PlayerPrefs.Save('timerStatus',Application.gameplay.settings.timerBoolean);
 }

@@ -19,8 +19,8 @@ function Player(_x,_y){
 	//game.camera.follow(_self);
 	//game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
 
-	_self.normalSpeed 	= PlayerConf.normalSpeed;
-	_self.runSpeed 		= PlayerConf.runSpeed;
+	_self.normalSpeed 	= Application.PlayerConf.normalSpeed;
+	_self.runSpeed 		= Application.PlayerConf.runSpeed;
 	_self.currentSpeed = _self.normalSpeed;
 
 	_self.controller = {
@@ -58,7 +58,7 @@ function Player(_x,_y){
     _self.sensor 	 = [];
     _self.malusActif = false;
     _self.malusTimer = null;
-    _self.currentSA  = SensorConf.player.feedBackAlpha;//current alpha of sensor
+    _self.currentSA  = Application.SensorConf.player.feedBackAlpha;//current alpha of sensor
     _self.storedSA   = _self.currentSA;//stored alpha of sensor
 
     /* Add first layers */
@@ -178,8 +178,8 @@ function Player(_x,_y){
 				if(item.alpha == 1 && _self.controller.lootKey.isDown){
 					//if object is good then add sensor layer
 					if(item.isGood){
-						if(SensorConf.player.layers < SensorConf.player.sensors.length ){
-							SensorConf.player.layers++;
+						if(Application.SensorConf.player.layers < Application.SensorConf.player.sensors.length ){
+							Application.SensorConf.player.layers++;
 							addLayerstoPlayer(_self);
 						}
 
@@ -223,7 +223,7 @@ function Player(_x,_y){
 		tw.onUpdateCallback(
 			function(twn,percent,twnData){
 				_circle.clear();
-				_circle.beginFill(SensorConf.player.feedBackColor, _self.currentSA);
+				_circle.beginFill(Application.SensorConf.player.feedBackColor, _self.currentSA);
 				_circle.drawCircle(0, 0, _circle.circleData.diameter);
 				_circle.endFill();
 			}, this

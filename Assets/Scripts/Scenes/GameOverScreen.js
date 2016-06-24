@@ -7,11 +7,9 @@ Application.GameOverScreen.prototype = {
 	create:function(){
 		console.log("Create GameOverScreen");
 
-		Application.Audio.heart_beat.isPlaying = true;
-		Application.Audio.heart_beat.stop();
-
-		ply.audios.looseGame.volume = .1;
-		ply.audios.looseGame.play();
+		
+		ply.audio.looseGame.volume = .2;
+		ply.audio.looseGame.play();
 
 	},
 	update:function(){
