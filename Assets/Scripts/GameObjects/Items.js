@@ -2,7 +2,7 @@ function Item(_x,_y,_type,_cpt){
 	var _self = game.add.sprite(_x, _y, _type);
 	game.physics.p2.enable([_self],false);
     _self.name = "item_"+_cpt;
-    _self.alpha = .5;
+    _self.alpha = ItemsConf.alpha;
     _self.isGood = _type == 'book' ? true : false;
     _self.body.fixedRotation = true;
     _self.body.static = true;
@@ -12,7 +12,6 @@ function Item(_x,_y,_type,_cpt){
 
     _self.body.setCollisionGroup(objectColGroup);
     _self.body.collides([playerColGroup,objectColGroup]);
-    _self.visible = Application.gameplay.objectVisible;
     return _self;
 }
 function itemGroups(){
@@ -21,7 +20,7 @@ function itemGroups(){
     _items.physicsBodyType = Phaser.Physics.P2JS;
     var type;
 
-    for (var i = 0; i < Application.gameplay.itemNbr; i++){
+    for (var i = 0; i < Application.gameplay.items; i++){
         //var posX = game.world.randomX;
         //var posY = game.world.randomY;
 

@@ -7,7 +7,6 @@ var ply;
 
 Application.LevelScreen.prototype = {
 	preload:function(){
-		_self = null;
 		this.player = null;
 		this.itemGroups = null;
 		this.missing = null;
@@ -41,7 +40,7 @@ Application.LevelScreen.prototype = {
 		this.missing 	= new Missing(500,600);
 		this.itemGroups.add(this.missing);
 
-		Application.gameData.items = this.itemGroups;
+		Application.gameplay.data = this.itemGroups;
 
 		/* THE PLAYER */
 		ply = this.player = new Player(300,600);

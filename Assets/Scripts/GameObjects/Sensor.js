@@ -14,8 +14,11 @@ function addSensorToItem(_item){
     _self.name          = _item.name+'_'+itemSensor.name;
     _self.circleData    = new Phaser.Circle(_item.x, _item.y, itemSensor.diameter );
 
-    _self.beginFill(itemSensor.color, Application.gameplay.debugSensorAlpha);
-    _self.drawCircle(-_item.x,-_item.y,itemSensor.diameter);
+    _self.beginFill(
+        SensorConf.items.layer.color,
+        SensorConf.items.feedBackAlpha
+    );
+    _self.drawCircle(-_item.x,-_item.y,SensorConf.items.layer.diameter);
     _self.endFill();
 
     game.physics.p2.enable(_self, false);
@@ -41,8 +44,11 @@ function addLayerstoPlayer(_player){
     _self.name              = _player.name+'_'+playerSensorArray[ _player.sensor.length ].name;
     _self.circleData        = new Phaser.Circle(_player.x,_player.y,playerSensorArray[ _player.sensor.length ].diameter);
 
-    _self.beginFill(playerSensorArray[ _player.sensor.length ].color, Application.gameplay.debugSensorAlpha);
-    _self.drawCircle(0,0,playerSensorArray[ _player.sensor.length ].diameter);
+    _self.beginFill(
+        SensorConf.player.sensors[ _player.sensor.length ].color,
+        SensorConf.player.sensorsAlpha
+    );
+    _self.drawCircle(0,0,SensorConf.player.sensors[ _player.sensor.length ].diameter);
     _self.endFill();
 
     game.physics.p2.enable( _self , false);
@@ -61,7 +67,10 @@ function playerFeedBackSensor(_player){
     var currentDiameter = _player.sensor[ _player.sensor.length-1 ].circleData.diameter;
     _self.circleData = new Phaser.Circle(_player.x,_player.y,currentDiameter);
 
-    _self.beginFill(Application.gameplay.playerFColor, Application.gameplay.playerFSensorAlpha );
+    _self.beginFill(
+        SensorConf.player.feedBackColor,
+        SensorConf.player.feedBackAlpha
+    );
     _self.drawCircle(0,0,currentDiameter);
     _self.endFill();
 

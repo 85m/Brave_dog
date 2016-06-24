@@ -19,8 +19,8 @@ function Player(_x,_y){
 	//game.camera.follow(_self);
 	//game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
 
-	_self.normalSpeed 	= 120;
-	_self.runSpeed 		= 450;
+	_self.normalSpeed 	= PlayerConf.normalSpeed;
+	_self.runSpeed 		= PlayerConf.runSpeed;
 	_self.currentSpeed = _self.normalSpeed;
 
 	_self.controller = {
@@ -54,10 +54,12 @@ function Player(_x,_y){
     _self.body.collides(environmentColGroup, null, this);//just need to collide with environment
 
     /* CUSTOM */
-    _self.name = "player";
-    _self.sensor = [];
+    _self.name 		 = "player";
+    _self.sensor 	 = [];
     _self.malusActif = false;
     _self.malusTimer = null;
+    _self.currentSA  = SensorConf.player.feedBackAlpha;//current alpha of sensor
+    _self.storedSA   = _self.currentSA;//stored alpha of sensor
 
     /* Add first layers */
     addLayerstoPlayer(_self);
@@ -150,7 +152,7 @@ function Player(_x,_y){
     	var currentSensorSize = _self.sensor[ _self.sensor.length-2 ].circleData.radius;
     	var minimumSensorSize = _self.sensor[ 0 ].circleData.radius;
 
-    	Application.gameData.items.forEach(function(item) {
+    	Application.gameplay.data.forEach(function(item) {
     		var res = checkObjectSensorOverlap(_self.sensor[ _self.sensor.length-1 ], item);
     		if(res){
 				//console.log('overlap 1');
@@ -165,7 +167,7 @@ function Player(_x,_y){
 
     /* Player overlap an invisible object */
     _self.overlapItem = function(){
-    	Application.gameData.items.forEach(function(item) {
+    	Application.gameplay.data.forEach(function(item) {
     		var res = checkItemOverlap(_self, item);
     		if(res){
 
@@ -176,8 +178,8 @@ function Player(_x,_y){
 				if(item.alpha == 1 && _self.controller.lootKey.isDown){
 					//if object is good then add sensor layer
 					if(item.isGood){
-						if(Application.gameData.layers < playerSensorArray.length ){
-							Application.gameData.layers++;
+						if(SensorConf.player.layers < SensorConf.player.sensors.length ){
+							SensorConf.player.layers++;
 							addLayerstoPlayer(_self);
 						}
 
@@ -189,10 +191,9 @@ function Player(_x,_y){
 
 					}else{
 						//else alpha = 0 for timer length
-						sensorTimer = 0;
 						_self.malusActif = true;
 						_self.malusTimer = new Timer(Phaser.Timer.SECOND* 5 ,false, _self.manageMalus,game);
-						Application.gameplay.playerSensor.currentState = 0;
+						_self.currentSA  = 0;
 						_self.audio.findGoodObject.stop();
 						_self.audio.findBadObject.volume = .5;
 						_self.audio.findBadObject.play();
@@ -207,7 +208,7 @@ function Player(_x,_y){
     /* Manage malus of player */
     _self.manageMalus = function(){
 		_self.malusActif = false;
-		Application.gameplay.playerSensor.currentState = Application.gameplay.playerSensor.default;
+		_self.currentSA = _self.storedSA;
     }
 
 	/*
@@ -222,7 +223,7 @@ function Player(_x,_y){
 		tw.onUpdateCallback(
 			function(twn,percent,twnData){
 				_circle.clear();
-				_circle.beginFill(Application.gameplay.playerFColor,Application.gameplay.playerSensor.currentState);
+				_circle.beginFill(SensorConf.player.feedBackColor, _self.currentSA);
 				_circle.drawCircle(0, 0, _circle.circleData.diameter);
 				_circle.endFill();
 			}, this
