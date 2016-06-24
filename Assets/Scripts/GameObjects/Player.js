@@ -43,11 +43,8 @@ function Player(_x,_y){
 	_self.audio.findMissing.loop 		= false;
 	_self.audio.findBadObject.loop 		= false;
 
-
-
 	game.physics.p2.enable([_self],false);
-
-    _self.name = "player";
+    
     _self.body.fixedRotation = true;
 
     _self.body.debug = Application.debugMode;
@@ -56,9 +53,10 @@ function Player(_x,_y){
     _self.body.setCollisionGroup(playerColGroup);
     _self.body.collides(environmentColGroup, null, this);//just need to collide with environment
 
-    s = _self;
-
+    /* CUSTOM */
+    _self.name = "player";
     _self.sensor = [];
+    _self.malusActif = false;
 
      addLayerstoPlayer(_self);
 
@@ -70,14 +68,14 @@ function Player(_x,_y){
 			_self.currentSpeed 							= _self.runSpeed;
 			_self.frame_currentSpeed 					= _self.frame_runSpeed;
 			_self.audio.findGoodObject.volume 			= 0;
-			_self.sensor[ _self.sensor.length-1 ].alpha 	-= .05;
+			_self.sensor[ _self.sensor.length-1 ].alpha -= .05;
 		}
 		else
 		{
 			_self.currentSpeed 							= _self.normalSpeed;
 			_self.frame_currentSpeed 					= _self.frame_normalSpeed;
 			_self.audio.findGoodObject.volume 			= 1;
-			_self.sensor[ _self.sensor.length-1 ].alpha 	= 1;
+			_self.sensor[ _self.sensor.length-1 ].alpha = 1;
 
 		}
 
@@ -126,8 +124,20 @@ function Player(_x,_y){
             _self.currentDirection = null;
 			_self.animations.stop();
 		}
-		moveUpdatePlayerSensor(_self);
+		_self.moveSensor();
     }//update
+
+    /* Sensor move with the player*/
+    _self.moveSensor = function(){
+	    if(_self.sensor.length > 0){
+	        for (var i = 0; i < _self.sensor.length; i++) {
+	            _self.sensor[i].body.x 			= _self.body.x;
+	            _self.sensor[i].body.y 			= _self.body.y;
+	            _self.sensor[i].circleData.x 	= _self.body.x;
+	            _self.sensor[i].circleData.y 	= _self.body.y;
+	        }
+	    }
+    }//end moveSensor
 
     /* loop into all item  and check if an overlap is made with the player sensor */
     _self.sensorColSensorItem = function(){
@@ -142,22 +152,22 @@ function Player(_x,_y){
     		var res = checkObjectSensorOverlap(_self.sensor[ _self.sensor.length-1 ], item);
     		if(res){
 				//console.log('overlap 1');
-				reduceCircle(sensorCircle,minimumSensorSize/2);
+				_self.manageFeedBackCircle(sensorCircle,minimumSensorSize/2);
 				isCollide  = true;
 			}
 		});
 		if(!isCollide){
-			growCircle(sensorCircle,currentSensorSize);
+			_self.manageFeedBackCircle(sensorCircle,currentSensorSize);
 		}
     }//end sensorColSensorItem
 
     /* Player overlap an invisible object */
     _self.overlapItem = function(){
     	Application.gameData.items.forEach(function(item) {
-    		var res = checkObjectOverlap(_self, item);
+    		var res = checkItemOverlap(_self, item);
     		if(res){
 
-				if(!malusActif){ _self.audio.findGoodObject.play(); }
+				if(!_self.malusActif){ _self.audio.findGoodObject.play(); }
 
 				if(_self.controller.digKey.isDown){ item.alpha = 1; }
 
@@ -178,7 +188,7 @@ function Player(_x,_y){
 					}else{
 						//else alpha = 0 for timer length
 						sensorTimer = 0;
-						malusActif = true;
+						_self.malusActif = true;
 						Application.gameplay.timer = new Timer(Phaser.Timer.SECOND*Application.gameplay.malusTimer,false,malus,game);
 						Application.gameplay.playerSensor.currentState = 0;
 						_self.audio.findGoodObject.stop();
@@ -189,8 +199,26 @@ function Player(_x,_y){
 				}	
     		}
     	});
-    }
-    //end overlapItem
+    }//end overlapItem
+
+	/*
+	feedback circle grow or reduce
+
+	Explain:
+	the value of radius is changing in the tween, with the tween callback we clear and redraw each time the circle
+	drawcircle demands the circle diameter
+	*/
+    _self.manageFeedBackCircle = function(_circle,_radius){
+		var tw = game.add.tween(_circle.circleData).to( { radius: _radius }, 1000, "Linear", true);
+		tw.onUpdateCallback(
+			function(twn,percent,twnData){
+				_circle.clear();
+				_circle.beginFill(Application.gameplay.playerFColor,Application.gameplay.playerSensor.currentState);
+				_circle.drawCircle(0, 0, _circle.circleData.diameter);
+				_circle.endFill();
+			}, this
+		);
+    }//end manageFeedBackCircle
     return _self;
 }
 
@@ -213,37 +241,6 @@ function checkItemOverlap(_player,_item){
 /* ************************************************************ */
 /* ************************************************************ */
 /* ************************************************************ */
-/*
-circle grow or reduce
-
-Explain:
-the value of radius is changing in the tween, with the tween callback we clear and redraw each time the circle
-drawcircle demands the circle diameter
-*/
-function reduceCircle(_circle,_radius){
-	var tw = game.add.tween(_circle.circleData).to( { radius: _radius }, 1000, "Linear", true);
-	tw.onUpdateCallback(
-		function(twn,percent,twnData){
-			_circle.clear();
-			_circle.beginFill(Application.gameplay.playerFColor,Application.gameplay.playerSensor.currentState);
-			_circle.drawCircle(0, 0, _circle.circleData.diameter);
-			_circle.endFill();
-		}, this
-	);
-}
-function growCircle(_circle,_radius){
-	var tw = game.add.tween(_circle.circleData).to( { radius: _radius }, 500, "Linear", true);
-	tw.onUpdateCallback(
-		function(twn,percent,twnData){
-			_circle.clear();
-			_circle.beginFill(Application.gameplay.playerFColor,Application.gameplay.playerSensor.currentState);
-			_circle.drawCircle(0, 0, _circle.circleData.diameter);
-			_circle.endFill();
-		}, this
-	);
-}
-/* ************************************************************ */
-
 
 function gameFinished()
 {

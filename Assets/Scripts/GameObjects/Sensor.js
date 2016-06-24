@@ -71,21 +71,3 @@ function playerFeedBackSensor(_player){
     //_self.body.debug = true;
     _player.sensor.push(_self);
 }
-
-/* APPLY FOR SENSOR OF PLAYER*/
-function moveUpdatePlayerSensor(_player){
-    if(_player.sensor.length > 0){
-        for (var i = 0; i < _player.sensor.length; i++) {
-            _player.sensor[i].body.x = _player.body.x;
-            _player.sensor[i].body.y = _player.body.y;
-            _player.sensor[i].circleData.x = _player.body.x;
-            _player.sensor[i].circleData.y = _player.body.y;
-        }
-        _player.sensor[_player.sensor.length-1].body.x = _player.x;
-        _player.sensor[_player.sensor.length-1].body.y = _player.y;
-        _player.sensor[_player.sensor.length-1].circleData.x = _player.x;
-        _player.sensor[_player.sensor.length-1].circleData.y = _player.y;
-    }
-}
-
-
