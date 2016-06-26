@@ -1,4 +1,4 @@
-Application.LevelScreen = function(){
+﻿Application.LevelScreen = function(){
 	console.log("Starting My Game");
 }
 
@@ -52,7 +52,7 @@ Application.LevelScreen.prototype = {
 		Application.gameplay.audio.heartbeat.play();
 		//console.log(this.heartbeat);
 
-		this.heart = game.add.sprite(50,50,'heart');
+		this.heart = game.add.sprite(50,10,'heart');
 		var beat = this.heart.animations.add('beat');
 		this.heart.animations.play('beat',2,true);
 
