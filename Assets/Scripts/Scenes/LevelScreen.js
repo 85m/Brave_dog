@@ -58,7 +58,7 @@ Application.LevelScreen.prototype = {
 
 		/* THE TIMER */
 		//this.gameTimer = new Timer(Phaser.Timer.MINUTE*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
-		this.gameTimer = new Timer(Phaser.Timer.SECOND*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
+		//this.gameTimer = new Timer(Phaser.Timer.SECOND*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
 
 
 		//INFO
@@ -74,12 +74,12 @@ Application.LevelScreen.prototype = {
 		if(this.player.malusTimer != null){
 			this.player.malusTimer.Update();
 		}
-		this.gameTimer.Update();
+		//this.gameTimer.Update();
 		
 	},
 	render:function(){
 
-		this.game.debug.text('Time : ' + this.gameTimer.Display() , 100, 32);
+		//this.game.debug.text('Time : ' + this.gameTimer.Display() , 100, 32);
 		
 		/* inutile d'affiché l'item - */
 		//this.game.debug.text('Item : ' + Application.gameData.items.length , 480, 32);
