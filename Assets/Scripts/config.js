@@ -7,7 +7,7 @@ var Application = {
 	gameplay:{
 		items:5,//number of items in game
 		data:null,//store :item, missing and all
-		gameTimer:5,//minute
+		gameTimer:10,//minute
 		malusTimer:5,//Seconde
 		settings:{
 			sensorBoolean:PlayerPrefs.Load("sensorStatus"),
