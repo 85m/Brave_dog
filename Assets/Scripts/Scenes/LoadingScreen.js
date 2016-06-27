@@ -12,10 +12,18 @@ Application.LoadingScreen.prototype = {
 
 
         /* BACKGROUND AN ENVIRONMENT  */
-        this.load.image("bg","Assets/Graphics/Map/bg.jpg");
-        this.game.load.physics('bgPhysicsData', 'Assets/Graphics/Map/bg.json');
-
-		this.load.image("bg1","Assets/Graphics/Map/bg1.jpg");
+        game.load.tilemap('map', 'Assets/Graphics/Map/Map2.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('000', 'Assets/Graphics/Map/Tile/000.png');
+        game.load.image('001', 'Assets/Graphics/Map/Tile/001.png');
+        game.load.image('002', 'Assets/Graphics/Map/Tile/002.png');
+        game.load.image('003', 'Assets/Graphics/Map/Tile/003.png');
+        game.load.image('004', 'Assets/Graphics/Map/Tile/004.png');
+        game.load.image('005', 'Assets/Graphics/Map/Tile/005.png');
+        game.load.image('006', 'Assets/Graphics/Map/Tile/006.png');
+        game.load.image('007', 'Assets/Graphics/Map/Tile/007.png');
+        game.load.image('008', 'Assets/Graphics/Map/Tile/008.png');
+        game.load.image('009', 'Assets/Graphics/Map/Tile/009.jpg');
+        game.load.image('010', 'Assets/Graphics/Map/Tile/010.png');
         
         /* PLAYER  */
         //this.load.image('player', 'Assets/Graphics/Player/player.jpg');
@@ -41,10 +49,6 @@ Application.LoadingScreen.prototype = {
 		this.game.load.audio('lose', 'Assets/audio/Dog-lose.ogg');
 
 		/* TEST  */
-		this.game.load.image('contra2', 'Assets/Graphics/Map/contra2.png');
-		this.game.load.physics('physicsData', 'Assets/Graphics/Map/sprites.json');
-
-
 
 	},
 	create:function(){

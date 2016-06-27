@@ -1,13 +1,15 @@
 var Application = {
 	config:{
-		width:window.innerWidth,
-		height:window.innerHeight
+		//width:window.innerWidth,
+		//height:window.innerHeight
+		width:800,
+		height:800
 	},
 	debugMode:false,
 	gameplay:{
 		items:5,//number of items in game
 		data:null,//store :item, missing and all
-		gameTimer:5,//minute
+		gameTimer:10,//minute
 		malusTimer:5,//Seconde
 		settings:{
 			sensorBoolean:PlayerPrefs.Load("sensorStatus"),

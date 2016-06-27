@@ -32,7 +32,29 @@ Application.LevelScreen.prototype = {
 		this.bg.body.setCollisionGroup(environmentColGroup);
 		this.bg.body.collides([environmentColGroup,playerColGroup]);*/
 
-		this.bg1 = this.game.add.tileSprite(0, 0, 1024,768, 'bg1');
+		this.map = game.add.tilemap('map');
+		this.map.addTilesetImage('000');
+		this.map.addTilesetImage('001');
+		this.map.addTilesetImage('002');
+		this.map.addTilesetImage('003');
+		this.map.addTilesetImage('004');
+		this.map.addTilesetImage('005');
+		this.map.addTilesetImage('007');
+		this.map.addTilesetImage('008');
+
+
+		this.layer = this.map.createLayer('grass\/sand');
+		this.layer = this.map.createLayer('base');
+		this.layer = this.map.createLayer('rock');
+		this.layer = this.map.createLayer('hole');
+		this.layer = this.map.createLayer('three');
+		this.layer = this.map.createLayer('garbage1');
+		this.layer = this.map.createLayer('garbage2');
+		this.layer = this.map.createLayer('garbage3');
+		this.layer = this.map.createLayer('garbage4');
+		this.layer = this.map.createLayer('wood');
+		this.layer = this.map.createLayer('Calque 10');
+		this.game.physics.p2.convertTilemap(this.map, this.layer);
 
 
 		/*   ITEMS */
@@ -54,9 +76,9 @@ Application.LevelScreen.prototype = {
 		Application.gameplay.audio.heartbeat.play();
 		//console.log(this.heartbeat);
 
-		this.heart = game.add.sprite(50,10,'heart');
-		var beat = this.heart.animations.add('beat');
-		this.heart.animations.play('beat',2,true);
+		//this.heart = game.add.sprite(50,10,'heart');
+		//var beat = this.heart.animations.add('beat');
+		//this.heart.animations.play('beat',2,true);
 
 		/* THE TIMER */
 		//this.gameTimer = new Timer(Phaser.Timer.MINUTE*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
@@ -100,9 +122,9 @@ Application.LevelScreen.prototype = {
 		//game.debug.geom(playerRing[ playerRing.length-1 ].circleData,'rgba(255,0,0,.2)');
 	},
 	gameOverScreen:function(){
-		console.log(Application.gameplay.audio.heartbeat)
-		Application.gameplay.audio.heartbeat.isPlaying = true;
-		Application.gameplay.audio.heartbeat.stop();
+		//console.log(Application.gameplay.audio.heartbeat)
+		//Application.gameplay.audio.heartbeat.isPlaying = true;
+		//Application.gameplay.audio.heartbeat.stop();
 		//console.log(this);
 		//this.heartbeat.isPlaying = true;
 		//this.heartbeat.stop();
