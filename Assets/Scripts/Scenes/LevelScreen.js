@@ -32,6 +32,8 @@ Application.LevelScreen.prototype = {
 		this.bg.body.setCollisionGroup(environmentColGroup);
 		this.bg.body.collides([environmentColGroup,playerColGroup]);*/
 
+		this.bg1 = this.game.add.tileSprite(0, 0, 1024,768, 'bg1');
+
 
 		/*   ITEMS */
 		this.itemGroups = new itemGroups();
@@ -58,7 +60,7 @@ Application.LevelScreen.prototype = {
 
 		/* THE TIMER */
 		//this.gameTimer = new Timer(Phaser.Timer.MINUTE*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
-		this.gameTimer = new Timer(Phaser.Timer.SECOND*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
+		//this.gameTimer = new Timer(Phaser.Timer.SECOND*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
 
 
 		//INFO
@@ -74,12 +76,12 @@ Application.LevelScreen.prototype = {
 		if(this.player.malusTimer != null){
 			this.player.malusTimer.Update();
 		}
-		this.gameTimer.Update();
+		//this.gameTimer.Update();
 		
 	},
 	render:function(){
 
-		this.game.debug.text('Time : ' + this.gameTimer.Display() , 100, 32);
+		//this.game.debug.text('Time : ' + this.gameTimer.Display() , 100, 32);
 		
 		/* inutile d'affiché l'item - */
 		//this.game.debug.text('Item : ' + Application.gameData.items.length , 480, 32);

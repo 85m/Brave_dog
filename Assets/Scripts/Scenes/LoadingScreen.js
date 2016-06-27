@@ -14,6 +14,8 @@ Application.LoadingScreen.prototype = {
         /* BACKGROUND AN ENVIRONMENT  */
         this.load.image("bg","Assets/Graphics/Map/bg.jpg");
         this.game.load.physics('bgPhysicsData', 'Assets/Graphics/Map/bg.json');
+
+		this.load.image("bg1","Assets/Graphics/Map/bg1.jpg");
         
         /* PLAYER  */
         //this.load.image('player', 'Assets/Graphics/Player/player.jpg');

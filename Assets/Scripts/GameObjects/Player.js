@@ -3,7 +3,7 @@ function Player(_x,_y){
 
 	var _self = game.add.sprite(_x, _y, "player");
 
-	//_self.scale.set(1);
+	_self.scale.set(2);
 
     _self.animations.add('move_down',  [0,1,2]);
     _self.animations.add('move_left',  [3,4,5]);
