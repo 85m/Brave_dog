@@ -48,23 +48,22 @@ Application.LevelScreen.prototype = {
 		this.layer = this.map.createLayer('garbage4');
 		this.layer = this.map.createLayer('wood');
 		this.layer = this.map.createLayer('downthree');
+
 		/* ********** */
 		Application.gameplay.holes = game.add.group();
-		/* THE PLAYER */
-		this.player = new Player(750,400);
-		/* ********** */
-		this.layer = this.map.createLayer('upthree');
-		this.map.setCollisionBetween(0,5000);
-		game.physics.p2.convertTilemap(this.map, this.layerwood);
-
 		/*   ITEMS */
 		this.itemGroups = new itemGroups();
-
 		/* THE MISSING IS A PART OF ITEMS GROUP */
 		this.missing 	= new Missing(23,520);
 		this.itemGroups.add(this.missing);
-
 		Application.gameplay.data = this.itemGroups;
+		/* THE PLAYER */
+		this.player = new Player(750,400);
+		/* ********** */
+
+		this.layer = this.map.createLayer('upthree');
+		this.map.setCollisionBetween(0,5000);
+		game.physics.p2.convertTilemap(this.map, this.layerwood);
 
 		this.tiles = game.add.group();
 		this.tiles.enableBody = true;
@@ -104,9 +103,9 @@ Application.LevelScreen.prototype = {
 
 
 		//TEST TEXT
-		var test = {
+		this.test = {
 			boxed:true,
-			centered:true,
+			centered:false,
 			x:50,y:600,w:700,h:150,
 			fontSize:15,
 			bgColor:0x333333,
@@ -114,15 +113,12 @@ Application.LevelScreen.prototype = {
 			content:[
 				{txt:"Bonjour Spencer, voici la situation, un accident à eu lieu ici et une personne manque"},
 				{txt:"Bonjour Al, voici la fin, un accident à eu lieu ici et une femme manque"},
-				{txt:"Bonjour Al, voici la fin, un accident à eu lieu ici et une femme manque"}
+				{txt:"Bonjour frfeed, voici la fin, un accident à eu lieu ici et une femme manque"}
 			]
 		}
-		//textBox(test);
+		//textBox(this.test);
 
-
-
-
-
+		this.dial = new Dialogue(this.test.content);
 	},
 	update:function(){
 		this.player.sensorColSensorItem();
@@ -131,9 +127,8 @@ Application.LevelScreen.prototype = {
 		if(this.player.malusTimer != null){
 			this.player.malusTimer.Update();
 		}
-
-		//dialogue().update();
 		//this.gameTimer.Update();
+		this.dial.update();
 		
 	},
 	render:function(){

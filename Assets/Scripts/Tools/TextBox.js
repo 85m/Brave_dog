@@ -21,10 +21,10 @@ function textBox(_info){
         graphics.endFill();
     }
 
-    var style = { font: _info.fontSize+"px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
+    //var style = { font: _info.fontSize+"px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
 
-    for (var i= 0 ; i < _info.content.length ; i++){
+/*    for (var i= 0 ; i < _info.content.length ; i++){
         y = y+contentGutter;
         game.add.text(x+boxGutter, y+ contentGutter*i, _info.content[i].txt, style);
-    }
+    }*/
 }
