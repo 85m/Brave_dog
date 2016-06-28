@@ -12,7 +12,7 @@ Application.LoadingScreen.prototype = {
 
 
         /* BACKGROUND AN ENVIRONMENT  */
-        game.load.tilemap('map', 'Assets/Graphics/Map/Map2.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map', 'Assets/Graphics/Map/Map.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('000', 'Assets/Graphics/Map/Tile/000.png');
         game.load.image('001', 'Assets/Graphics/Map/Tile/001.png');
         game.load.image('002', 'Assets/Graphics/Map/Tile/002.png');
@@ -33,12 +33,18 @@ Application.LoadingScreen.prototype = {
         this.load.spritesheet('heart', 'Assets/Graphics/GUI/heart.png',32,32,2);
 
         /* MISSING  */
-        this.load.image('missing', 'Assets/Graphics/Missing/missing.jpg');
+        this.load.image('missing', 'Assets/Graphics/Missing/missing.png');
 		
 		/* MISSING ITEMS GOOD/BAD  */
-		this.load.image('book', 'Assets/Graphics/Items/book.jpg');
-		this.load.image('bBook', 'Assets/Graphics/Items/bBook.jpg');
+		//this.load.image('book', 'Assets/Graphics/Items/book.jpg');
+		//this.load.image('bBook', 'Assets/Graphics/Items/bBook.jpg');
 
+		this.load.image('bomberman', 'Assets/Graphics/Items/bomberman.png');
+		this.load.image('book', 'Assets/Graphics/Items/book.png');
+		this.load.image('glass', 'Assets/Graphics/Items/glass.png');
+		this.load.image('glove', 'Assets/Graphics/Items/glove.png');
+		this.load.image('hat', 'Assets/Graphics/Items/hat.png');
+		this.load.image('shave', 'Assets/Graphics/Items/shave.png');
 
 
 		/* AUDIO  */

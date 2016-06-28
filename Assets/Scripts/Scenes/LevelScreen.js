@@ -3,7 +3,9 @@
 }
 
 var ply;
-
+var layerwood;
+var test;
+var tiles;
 
 Application.LevelScreen.prototype = {
 	preload:function(){
@@ -24,14 +26,6 @@ Application.LevelScreen.prototype = {
 		objectColGroup = game.physics.p2.createCollisionGroup();
 
 		/*  BACKGROUND */
-/*		b = this.bg = this.game.add.tileSprite(1024/2, 768/2, 1024,768, 'bg');
-		this.game.physics.p2.enable([ this.bg ], true);
-		this.bg.body.static = true;
-		this.bg.body.clearShapes();
-		this.bg.body.loadPolygon('bgPhysicsData', 'bg');
-		this.bg.body.setCollisionGroup(environmentColGroup);
-		this.bg.body.collides([environmentColGroup,playerColGroup]);*/
-
 		this.map = game.add.tilemap('map');
 		this.map.addTilesetImage('000');
 		this.map.addTilesetImage('001');
@@ -43,37 +37,54 @@ Application.LevelScreen.prototype = {
 		this.map.addTilesetImage('008');
 
 
-		this.layer = this.map.createLayer('grass\/sand');
+		this.layer = this.map.createLayer('grass');
 		this.layer = this.map.createLayer('base');
-		this.layer = this.map.createLayer('rock');
+		this.layer = this.map.createLayer('tile');
+		this.layer = this.map.createLayer('uptile');
 		this.layer = this.map.createLayer('hole');
-		this.layer = this.map.createLayer('three');
 		this.layer = this.map.createLayer('garbage1');
 		this.layer = this.map.createLayer('garbage2');
 		this.layer = this.map.createLayer('garbage3');
 		this.layer = this.map.createLayer('garbage4');
 		this.layer = this.map.createLayer('wood');
-		this.layer = this.map.createLayer('Calque 10');
-		this.game.physics.p2.convertTilemap(this.map, this.layer);
+		this.layer = this.map.createLayer('downthree');
 
+		/* THE PLAYER */
+		this.player = new Player(750,400);
+
+		this.layer = this.map.createLayer('upthree');
+
+		this.map.setCollisionBetween(0,5000);
+		game.physics.p2.convertTilemap(this.map, this.layerwood);
 
 		/*   ITEMS */
 		this.itemGroups = new itemGroups();
 
 		/* THE MISSING IS A PART OF ITEMS GROUP */
-		this.missing 	= new Missing(500,600);
+		this.missing 	= new Missing(23,520);
 		this.itemGroups.add(this.missing);
 
 		Application.gameplay.data = this.itemGroups;
 
-		/* THE PLAYER */
-		ply = this.player = new Player(300,600);
+		this.tiles = game.add.group();
+		this.tiles.enableBody = true;
+		this.tiles.physicsBodyType = Phaser.Physics.P2JS;
 
-		Application.gameplay.audio.heartbeat = game.add.audio('heartbeat');
-		Application.gameplay.audio.heartbeat.volume = 1;
-		Application.gameplay.audio.heartbeat.isPlaying = true;
-		Application.gameplay.audio.heartbeat.loop = true;
-		Application.gameplay.audio.heartbeat.play();
+		for(var i=0 ; i < collideTile.length ; i++){
+			var t = this.tiles.create(collideTile[i].x, collideTile[i].y, null);
+			t.anchor.set(0);
+			t.body.setRectangle(collideTile[i].w, collideTile[i].h, 0, 0, 0);
+			t.body.static = true;
+			t.body.setCollisionGroup(environmentColGroup);
+			t.body.collides([environmentColGroup,playerColGroup]);
+			t.body.debug = false;
+		}
+
+		// Application.gameplay.audio.heartbeat = game.add.audio('heartbeat');
+		// Application.gameplay.audio.heartbeat.volume = 1;
+		// Application.gameplay.audio.heartbeat.isPlaying = true;
+		// Application.gameplay.audio.heartbeat.loop = true;
+		// Application.gameplay.audio.heartbeat.play();
 		//console.log(this.heartbeat);
 
 		//this.heart = game.add.sprite(50,10,'heart');

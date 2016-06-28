@@ -31,7 +31,7 @@ var Application = {
 		normalSpeed:120,
 		runSpeed:450
 	},
-	ItemsConf:{ alpha:0},
+	ItemsConf:{ alpha:1},
 	SensorConf:{
 		player:{
 			layers:1,//actif layers in begin of game
@@ -58,3 +58,56 @@ var Application = {
 
 /* FOR TEST */
 var objectPosTest = [{x:100,y:100},{x:200,y:800},{x:900,y:700}];
+
+//create empty sprite and put it en group
+//calcul = tile (32x32) * position + offset
+var offsetX = 32;
+var offsetY = 16;
+var collideTile =[
+//wood
+{x:0+offsetX,y:320+offsetY,w:64,h:32},
+{x:160+offsetX,y:288+offsetY,w:64,h:32},
+{x:192+offsetX,y:320+offsetY,w:64,h:32},
+{x:256+offsetX,y:320+offsetY,w:64,h:32},
+//grand three
+{x:64+offsetX,y:384+offsetY,w:64,h:32},
+{x:576+offsetX,y:384+offsetY,w:64,h:32},
+//small three
+{x:320+offsetY,y:384+offsetY,w:32,h:32},
+{x:544+offsetY,y:640+offsetY,w:32,h:32},
+//forest border
+{x:(0*32)+offsetY,y:(8*32)+offsetY,w:32,h:32},
+{x:(1*32)+offsetX,y:(8*32)+offsetY,w:64,h:32},
+{x:(3*32)+offsetX,y:(7*32)+offsetY,w:64,h:32},
+{x:(3*32)+offsetX,y:(6*32)+offsetY,w:32,h:32},
+{x:(5*32)+offsetX,y:(5*32)+offsetY,w:64,h:32},
+{x:(15*32)+offsetX,y:(6*32)+offsetY,w:64*9,h:32},
+{x:(12*32)+offsetX,y:(7*32)+offsetY,w:64,h:32},
+{x:(22*32)+offsetX,y:(7*32)+offsetY,w:64,h:32},
+//hole
+{x:(6*32)+offsetY,y:(13*32)+offsetY,w:32*2,h:32*2},
+{x:(8*32)+offsetY,y:(20.5*32)+offsetY,w:32*2,h:32*5},
+{x:(20.5*32)+offsetY,y:(8.5*32)+offsetY,w:32*3,h:32*1.5},
+//little hole
+{x:(2.9*32)+offsetX,y:(22.5*32)+offsetY,w:32*1.5,h:32*2},
+{x:(12.5*32)+offsetX,y:(23.5*32)+offsetY,w:32 ,h:32*2},
+{x:(13.5*32)+offsetX,y:(21.5*32)+offsetY,w:32 ,h:32*2},
+{x:(22.5*32)+offsetX,y:(22.5*32)+offsetY,w:32 ,h:32*2}
+];
+
+
+var goodItem = [
+	{name:'bomberman',	x:784,y:291,w:16,h:16,type:'good'},
+	{name:'book',		x:270,y:779,w:16,h:16,type:'good'},
+	{name:'glass',		x:469,y:241,w:16,h:16,type:'good'},
+	{name:'hat',		x:354,y:369,w:16,h:16,type:'good'},
+	{name:'shave',		x:232,y:303,w:16,h:16,type:'good'}
+]
+
+
+
+window.addEventListener('click', getCoordonne);
+
+function getCoordonne(e){
+	console.log('x:'+e.clientX ,',y:'+e.clientY);
+}

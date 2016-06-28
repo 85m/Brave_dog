@@ -1,18 +1,8 @@
-var playerSensorArray = [
-    {name:'closeSensor',diameter:100,color:0xFF0000},
-    {name:'midSensor',diameter:160,color:0x00FF00},
-    {name:'nv1Sensor',diameter:220,color:0xFFF000},
-    {name:'nv2Sensor',diameter:280,color:0x0000FF},
-    {name:'nv3Sensor',diameter:340,color:0xFF00FF}
-]
-
-var itemSensor = {name:'objSensor',diameter:220,color:0xFF6D34};
-
 //SENSOR FOR ITEM
 function addSensorToItem(_item){
     var _self           = game.add.graphics(0,0);
-    _self.name          = _item.name+'_'+itemSensor.name;
-    _self.circleData    = new Phaser.Circle(_item.x, _item.y, itemSensor.diameter );
+    _self.name          = _item.name+'_'+Application.SensorConf.items.layer.name;
+    _self.circleData    = new Phaser.Circle(_item.x, _item.y, Application.SensorConf.items.layer.diameter );
 
     _self.beginFill(
         Application.SensorConf.items.layer.color,
@@ -41,8 +31,8 @@ function addLayerstoPlayer(_player){
         _player.sensor.pop();
     }
     var _self               = game.add.graphics(_player.x, _player.y);
-    _self.name              = _player.name+'_'+playerSensorArray[ _player.sensor.length ].name;
-    _self.circleData        = new Phaser.Circle(_player.x,_player.y,playerSensorArray[ _player.sensor.length ].diameter);
+    _self.name              = _player.name+'_'+Application.SensorConf.player.sensors[ _player.sensor.length ].name;
+    _self.circleData        = new Phaser.Circle(_player.x,_player.y,Application.SensorConf.player.sensors[ _player.sensor.length ].diameter);
 
     _self.beginFill(
         Application.SensorConf.player.sensors[ _player.sensor.length ].color,
