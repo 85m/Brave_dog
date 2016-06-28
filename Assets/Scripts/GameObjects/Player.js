@@ -32,6 +32,7 @@ function Player(_x,_y){
 		digKey: 	game.input.keyboard.addKey(Phaser.Keyboard.X),
 		lootKey: 	game.input.keyboard.addKey(Phaser.Keyboard.A)
 	}
+	_self.isAlreadyDown = false;//for dig (only once)
 
 	_self.audio = {
 		findGoodObject: 	game.add.audio('happy'),
@@ -182,6 +183,12 @@ function Player(_x,_y){
 							Application.SensorConf.player.layers++;
 							addLayerstoPlayer(_self);
 						}
+						//add a hole if find something
+						Application.gameplay.holes.forEach(function(hole){
+							if(hole.name == item.name){
+								hole.visible = true;
+							}
+						});
 
 					}else if(item.name == "missing"){
 						_self.audio.findBadObject.stop();
@@ -200,7 +207,20 @@ function Player(_x,_y){
 					}
 					item.destroy();
 				}	
-    		}
+    		}else{
+				if(_self.controller.digKey.isDown){
+					if(!_self.isAlreadyDown){
+						var hole = game.add.sprite(_self.x,_self.y,'dog_filled');
+						hole.anchor.set(0);
+						hole.scale.x = .5;
+						hole.scale.y = .5;
+						Application.gameplay.holes.add(hole);
+						_self.isAlreadyDown = true;
+					}
+				}else{
+					_self.isAlreadyDown = false;
+				}
+			}
     	});
     }//end overlapItem
 

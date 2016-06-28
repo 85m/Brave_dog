@@ -36,9 +36,6 @@ Application.LoadingScreen.prototype = {
         this.load.image('missing', 'Assets/Graphics/Missing/missing.png');
 		
 		/* MISSING ITEMS GOOD/BAD  */
-		//this.load.image('book', 'Assets/Graphics/Items/book.jpg');
-		//this.load.image('bBook', 'Assets/Graphics/Items/bBook.jpg');
-
 		this.load.image('bomberman', 'Assets/Graphics/Items/bomberman.png');
 		this.load.image('book', 'Assets/Graphics/Items/book.png');
 		this.load.image('glass', 'Assets/Graphics/Items/glass.png');
@@ -46,6 +43,9 @@ Application.LoadingScreen.prototype = {
 		this.load.image('hat', 'Assets/Graphics/Items/hat.png');
 		this.load.image('shave', 'Assets/Graphics/Items/shave.png');
 
+		/* EFFECT */
+		this.load.image('dog_hole', 'Assets/Graphics/Effect/dog_hole.png');
+		this.load.image('dog_filled', 'Assets/Graphics/Effect/dog_filled.png');
 
 		/* AUDIO  */
 		this.game.load.audio('happy', ['Assets/audio/Dog-happy.mp3', 'Assets/audio/Dog-happy.ogg']);

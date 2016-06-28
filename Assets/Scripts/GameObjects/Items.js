@@ -19,6 +19,7 @@ function Item(_item,_cpt){
 }
 function itemGroups(){
 	var _items = game.add.group();
+
 	_items.enableBody = true;
     _items.physicsBodyType = Phaser.Physics.P2JS;
 
@@ -26,6 +27,13 @@ function itemGroups(){
         var anItem = Item(goodItem[i],i);
         addSensorToItem(anItem);
         _items.add(anItem);
+
+        var hole = game.add.sprite(goodItem[i].x,goodItem[i].y,'dog_hole');
+        hole.name = "item_"+i;
+        hole.visible = false;
+        hole.scale.x = .5;
+        hole.scale.y = .5;
+        Application.gameplay.holes.add(hole);
     }
     _items.visible = true;
     return _items;

@@ -8,6 +8,7 @@ var Application = {
 	debugMode:false,
 	gameplay:{
 		items:5,//number of items in game
+		holes:null,
 		data:null,//store :item, missing and all
 		gameTimer:10,//minute
 		malusTimer:5,//Seconde
@@ -31,7 +32,7 @@ var Application = {
 		normalSpeed:120,
 		runSpeed:450
 	},
-	ItemsConf:{ alpha:1},
+	ItemsConf:{ alpha:0},
 	SensorConf:{
 		player:{
 			layers:1,//actif layers in begin of game
@@ -50,7 +51,7 @@ var Application = {
 		},
 		items:{
 			layer:{name:'objSensor',diameter:220,color:0xFF6D34},
-			feedBackAlpha:.5,
+			feedBackAlpha:0,
 			visible:false
 		}
 	}
