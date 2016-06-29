@@ -49,22 +49,21 @@ Application.LevelScreen.prototype = {
 		this.layer = this.map.createLayer('wood');
 		this.layer = this.map.createLayer('downthree');
 
-		/* THE PLAYER */
-		this.player = new Player(750,400);
-
-		this.layer = this.map.createLayer('upthree');
-
-		this.map.setCollisionBetween(0,5000);
-		game.physics.p2.convertTilemap(this.map, this.layerwood);
-
+		/* ********** */
+		Application.gameplay.holes = game.add.group();
 		/*   ITEMS */
 		this.itemGroups = new itemGroups();
-
 		/* THE MISSING IS A PART OF ITEMS GROUP */
 		this.missing 	= new Missing(23,520);
 		this.itemGroups.add(this.missing);
-
 		Application.gameplay.data = this.itemGroups;
+		/* THE PLAYER */
+		this.player = new Player(750,400);
+		/* ********** */
+
+		this.layer = this.map.createLayer('upthree');
+		this.map.setCollisionBetween(0,5000);
+		game.physics.p2.convertTilemap(this.map, this.layerwood);
 
 		this.tiles = game.add.group();
 		this.tiles.enableBody = true;
@@ -97,10 +96,29 @@ Application.LevelScreen.prototype = {
 
 
 		//INFO
-		var style = { font: "20px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
-		game.add.text(Application.config.width - 200, Application.config.height - 100 , "X : Creuser", style);
-		game.add.text(Application.config.width - 200, Application.config.height - 125 , "A : Loot", style);
-		
+		var style = { font: "15px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
+		game.add.text(Application.config.width - 100, Application.config.height - 75 , "A : Loot", style);
+		game.add.text(Application.config.width - 100, Application.config.height - 50 , "X : Creuser", style);
+		game.add.text(Application.config.width - 100, Application.config.height - 25 , "Shift : courir", style);
+
+
+		//TEST TEXT
+		this.test = {
+			boxed:true,
+			centered:false,
+			x:50,y:600,w:700,h:150,
+			fontSize:15,
+			bgColor:0x333333,
+			borderColor:0xFF0000,
+			content:[
+				{txt:"Bonjour Spencer, voici la situation, un accident à eu lieu ici et une personne manque"},
+				{txt:"Bonjour Al, voici la fin, un accident à eu lieu ici et une femme manque"},
+				{txt:"Bonjour frfeed, voici la fin, un accident à eu lieu ici et une femme manque"}
+			]
+		}
+		//textBox(this.test);
+
+		this.dial = new Dialogue(this.test.content);
 	},
 	update:function(){
 		this.player.sensorColSensorItem();
@@ -110,6 +128,7 @@ Application.LevelScreen.prototype = {
 			this.player.malusTimer.Update();
 		}
 		//this.gameTimer.Update();
+		this.dial.update();
 		
 	},
 	render:function(){
