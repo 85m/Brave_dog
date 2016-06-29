@@ -9,7 +9,8 @@ Application.LoadingScreen.prototype = {
 		/* LOGO TECHNOBEL  */
         this.load.image("technobel_logo","Assets/Graphics/Preload/logo_technobel.png");
         this.load.image("loading","Assets/Graphics/Preload/preloader-bar.png");
-
+        /* LOGO BRAVE DOG  */
+        this.load.image("logoBraveDog","Assets/Graphics/Preload/Brave_Dog.png");
 
         /* BACKGROUND AN ENVIRONMENT  */
         game.load.tilemap('map', 'Assets/Graphics/Map/Map.json', null, Phaser.Tilemap.TILED_JSON);
@@ -31,6 +32,9 @@ Application.LoadingScreen.prototype = {
 
         /* GUI*/
         this.load.spritesheet('heart', 'Assets/Graphics/GUI/heart.png',32,32,2);
+        this.load.image('timerbg', 'Assets/Graphics/GUI/timer_bg.png');
+        this.load.image('spacebar', 'Assets/Graphics/GUI/spacebar.png');
+        this.load.image('command', 'Assets/Graphics/GUI/command.png');
 
         /* MISSING  */
         this.load.image('missing', 'Assets/Graphics/Missing/missing.png');
@@ -48,17 +52,23 @@ Application.LoadingScreen.prototype = {
 		this.load.image('dog_filled', 'Assets/Graphics/Effect/dog_filled.png');
 
 		/* AUDIO  */
-		this.game.load.audio('happy', ['Assets/audio/Dog-happy.mp3', 'Assets/audio/Dog-happy.ogg']);
+		this.game.load.audio('happy', 'Assets/audio/Dog-happy.ogg');
 		this.game.load.audio('nohappy','Assets/audio/Dog-nohappy.ogg');
-		this.game.load.audio('heartbeat', ['Assets/audio/heartbeat.mp3', 'Assets/audio/heartbeat.ogg']);
-		this.game.load.audio('heartstop', ['Assets/audio/heartbeat-stop.mp3', 'Assets/audio/heartbeat-stop.ogg']);
+		this.game.load.audio('heartbeat', 'Assets/audio/heartbeat.ogg');
+		this.game.load.audio('heartstop', 'Assets/audio/heartbeat-stop.ogg');
 		this.game.load.audio('lose', 'Assets/audio/Dog-lose.ogg');
+		this.game.load.audio('ambiant', 'Assets/audio/Anxious-Heart.ogg');
 
-		/* TEST  */
+		/* SCALE  */
+		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;
 
 	},
 	create:function(){
 		console.log("Create LoadingScreen");
+
+		game.stage.backgroundColor = "#FFF";
 		var image = this.add.image(Application.config.width / 2, Application.config.height / 2, 'technobel_logo');
 		image.anchor.setTo(0.5,0.5);
 

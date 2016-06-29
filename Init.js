@@ -8,6 +8,7 @@ var game = new Phaser.Game(
 
 if(Application.gameplay.settings.sensorBoolean == undefined){ PlayerPrefs.Save('sensorStatus',true); }
 if(Application.gameplay.settings.timerBoolean == undefined){ PlayerPrefs.Save('timerStatus',true); }
+if(Application.tuto == undefined){ PlayerPrefs.Save('tutoShowed',false); }
 
 game.state.add('Loading',Application.LoadingScreen);
 game.state.add('Title',Application.TitleScreen);

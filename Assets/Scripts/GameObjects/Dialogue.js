@@ -1,8 +1,11 @@
-function Dialogue(_content){
+function Dialogue(_content,_status){
 
+    var _self = this;
     this.idx = 0;
     this.alreadyDown = false;
     this.spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    this.dialogueVisible = _status;
 
     this.dialogData = {
         x:50,
@@ -11,55 +14,45 @@ function Dialogue(_content){
         h:150,
         boxGutter:20,
         fontSize:15,
-        contentGutter : this.fontSize * 1.2
+        contentGutter:function() {return this.fontSize * 1.2;}
     }
 
-    this.txt = "";
+    //INIT BOX AND TEXT
+    this.graphics = game.add.graphics(0, 0);
+    var style = { font: this.dialogData.fontSize+"px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
+    _self.txt = game.add.text( this.dialogData.x + this.dialogData.boxGutter,
+                this.dialogData.y + this.dialogData.contentGutter(),
+                _content[ this.idx ].txt ,
+                style);
 
-    this.update = function(){
-        this.box();
-        this.launch();
-        this.displayTxt();
-    }
-    this.launch = function(){
-        if (this.spacebar.isDown){
-            if(!this.alreadyDown){
-                this.alreadyDown = true;
-                //_content[ this.idx].txt;
-                console.log( _content[ this.idx].txt );
-                this.idx++;
-            }
+
+    this.NextDialogue = function(){
+        if(this.idx < _content.length-1){
+            this.idx++;
+            _self.displayTxt();
         }else{
-            this.alreadyDown = false;
+            this.graphics.destroy();
+            this.txt.destroy();
+            Application.gameplay.canPlay = true;
         }
     }
 
     this.box = function(){
-            var graphics = game.add.graphics(0, 0);
-
-            // draw a rectangle
-            graphics.beginFill(0x333333, 1);
-            graphics.lineStyle(2, 0xFF0000 , 1);
-            graphics.drawRect(this.dialogData.x, this.dialogData.y, this.dialogData.w, this.dialogData.h);
-            graphics.endFill();
+        // draw a rectangle
+        _self.graphics.clear();
+        _self.graphics.beginFill(0x333333, 1);
+        _self.graphics.lineStyle(2, 0xFFFFFF , 1);
+        _self.graphics.drawRect(_self.dialogData.x, _self.dialogData.y, _self.dialogData.w, _self.dialogData.h);
+        _self.graphics.endFill();
     }
 
     this.displayTxt = function(){
-
-        var style = { font: this.dialogData.fontSize+"px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
-        if(this.idx < _content.length){
-
-            console.log(this.dialogData.y)
-
-
-            this.txt = game.add.text(
-                this.dialogData.x + this.dialogData.boxGutter,
-                this.dialogData.y,
-                _content[ this.idx].txt,
-                style
-            );
-        }
+        _self.txt.setText(_content[ this.idx].txt );
     }
+
+    this.box();
+    //diplay spacebar - unused
+    //this.guiSpacebar = game.add.image(Application.config.width-120,Application.config.height-60,'spacebar');
 
     return this;
 }

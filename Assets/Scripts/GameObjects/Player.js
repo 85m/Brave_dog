@@ -29,17 +29,20 @@ function Player(_x,_y){
 		leftKey: 	game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
 		rightKey: 	game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
 		shiftKey: 	game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
-		digKey: 	game.input.keyboard.addKey(Phaser.Keyboard.X),
+		digKey: 	game.input.keyboard.addKey(Phaser.Keyboard.Z),
 		lootKey: 	game.input.keyboard.addKey(Phaser.Keyboard.A)
 	}
+
 	_self.isAlreadyDown = false;//for dig (only once)
 
 	_self.audio = {
 		findGoodObject: 	game.add.audio('happy'),
 		findBadObject : 	game.add.audio('nohappy'),
-		findMissing : 		game.add.audio('happy'), //to change
-		looseGame : 		game.add.audio('lose')
+		findMissing : 		game.add.audio('happy'), //to change	
 	}
+	Application.gameplay.audio.lose = game.add.audio('lose');
+
+
 	_self.audio.findGoodObject.loop 	= false;
 	_self.audio.findMissing.loop 		= false;
 	_self.audio.findBadObject.loop 		= false;
@@ -68,68 +71,71 @@ function Player(_x,_y){
 	_self.update = function(){
     	_self.body.setZeroVelocity();
 
-		if (_self.controller.shiftKey.isDown)//RUN
-		{
-			_self.currentSpeed 							= _self.runSpeed;
-			_self.frame_currentSpeed 					= _self.frame_runSpeed;
-			_self.audio.findGoodObject.volume 			= 0;
-			_self.sensor[ _self.sensor.length-1 ].alpha -= .05;
-		}
-		else
-		{
-			_self.currentSpeed 							= _self.normalSpeed;
-			_self.frame_currentSpeed 					= _self.frame_normalSpeed;
-			_self.audio.findGoodObject.volume 			= 1;
-			_self.sensor[ _self.sensor.length-1 ].alpha = 1;
+    	if(Application.gameplay.canPlay){ //for tuto
 
-		}
+			if (_self.controller.shiftKey.isDown)//RUN
+			{
+				_self.currentSpeed 							= _self.runSpeed;
+				_self.frame_currentSpeed 					= _self.frame_runSpeed;
+				_self.audio.findGoodObject.volume 			= 0;
+				_self.sensor[ _self.sensor.length-1 ].alpha -= .05;
+			}
+			else
+			{
+				_self.currentSpeed 							= _self.normalSpeed;
+				_self.frame_currentSpeed 					= _self.frame_normalSpeed;
+				_self.audio.findGoodObject.volume 			= 1;
+				_self.sensor[ _self.sensor.length-1 ].alpha = 1;
 
-		if (_self.controller.upKey.isDown)
-		{
-			_self.body.moveUp(_self.currentSpeed);
-			_self.animations.play('move_up', _self.frame_currentSpeed, true);
-			_self.currentDirection = "UP";
-		}
-		else if (_self.controller.downKey.isDown)
-		{
-			_self.body.moveDown(_self.currentSpeed);
-			_self.animations.play('move_down', _self.frame_currentSpeed, true);
-			_self.currentDirection = "DOWN";
-		}
-		else if (_self.controller.leftKey.isDown)
-		{
-			_self.body.moveLeft(_self.currentSpeed);
-			_self.animations.play('move_left', _self.frame_currentSpeed, true);
-			_self.currentDirection = "LEFT";
-		}
-		else if (_self.controller.rightKey.isDown)
-		{
-			_self.body.moveRight(_self.currentSpeed);
-			_self.animations.play('move_right', _self.frame_currentSpeed, true);
-			_self.currentDirection = "RIGHT";
-		}
-		else{
+			}
 
-			if(_self.currentDirection == "UP")
-            {
-                _self.animations.frame = 10;
-            }
-            if(_self.currentDirection == "DOWN")
-            {
-                _self.animations.frame = 1;
-            }
-            if(_self.currentDirection == "LEFT")
-            {
-                _self.animations.frame = 5;
-            }
-            if(_self.currentDirection == "RIGHT")
-            {
-                _self.animations.frame = 7;
-            }
-            _self.currentDirection = null;
-			_self.animations.stop();
+			if (_self.controller.upKey.isDown)
+			{
+				_self.body.moveUp(_self.currentSpeed);
+				_self.animations.play('move_up', _self.frame_currentSpeed, true);
+				_self.currentDirection = "UP";
+			}
+			else if (_self.controller.downKey.isDown)
+			{
+				_self.body.moveDown(_self.currentSpeed);
+				_self.animations.play('move_down', _self.frame_currentSpeed, true);
+				_self.currentDirection = "DOWN";
+			}
+			else if (_self.controller.leftKey.isDown)
+			{
+				_self.body.moveLeft(_self.currentSpeed);
+				_self.animations.play('move_left', _self.frame_currentSpeed, true);
+				_self.currentDirection = "LEFT";
+			}
+			else if (_self.controller.rightKey.isDown)
+			{
+				_self.body.moveRight(_self.currentSpeed);
+				_self.animations.play('move_right', _self.frame_currentSpeed, true);
+				_self.currentDirection = "RIGHT";
+			}
+			else{
+
+				if(_self.currentDirection == "UP")
+	            {
+	                _self.animations.frame = 10;
+	            }
+	            if(_self.currentDirection == "DOWN")
+	            {
+	                _self.animations.frame = 1;
+	            }
+	            if(_self.currentDirection == "LEFT")
+	            {
+	                _self.animations.frame = 5;
+	            }
+	            if(_self.currentDirection == "RIGHT")
+	            {
+	                _self.animations.frame = 7;
+	            }
+	            _self.currentDirection = null;
+				_self.animations.stop();
+			}
+			_self.moveSensor();
 		}
-		_self.moveSensor();
     }//update
 
     /* Sensor move with the player*/
@@ -211,9 +217,9 @@ function Player(_x,_y){
 				if(_self.controller.digKey.isDown){
 					if(!_self.isAlreadyDown){
 						var hole = game.add.sprite(_self.x,_self.y,'dog_filled');
-						hole.anchor.set(0);
-						hole.scale.x = .5;
-						hole.scale.y = .5;
+						hole.anchor.set(.5);
+						hole.scale.x = .7;
+						hole.scale.y = .7;
 						Application.gameplay.holes.add(hole);
 						_self.isAlreadyDown = true;
 					}
@@ -274,7 +280,7 @@ function checkItemOverlap(_player,_item){
 
 function gameFinished()
 {
-	//game.paused = true;
+	Application.gameplay.canPlay = false;
 
 	var graphics = game.add.graphics(0, 0);
 
@@ -289,21 +295,29 @@ function gameFinished()
 
 	// draw a rectangle
 	graphics.beginFill(0x000000, 1);
-    graphics.lineStyle(2, 0xFF700B, 1);
+    graphics.lineStyle(2, 0xFFFFFF, 1);
     graphics.drawRect(x, y, width, height);
     graphics.endFill();
 
     var style = { font: "25px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
 
-    var congratsTxt = "Tu as sauvé la personne disparu";
-    var infosTime = "Cela t'as pris : ";
+    var congratsTxt = "Tu as sauvé le disparu";
+    var infosTime = "Cela t'a pris : ";
     var menuBtn = ""
 
 
+    /*  CALCUL */
 
-    game.add.text(x + 50, y + 50 , "Félicitation :)", style);
+    var beginTime = Application.gameplay.gameTimer;
+    var tps = Application.gameplay.showTimer.getCurrentTime();
+    console.log(beginTime,tps);
+
+
+
+
+    game.add.text(x + 50, y + 50 , "Félicitations :)", style);
     game.add.text(x + 50, y + 90 , congratsTxt, style);
-    game.add.text(x + 50, y + 130 , infosTime + "2:00", style);
+    game.add.text(x + 50, y + 130 , infosTime + Application.gameplay.showTimer.Display(), style);
 
     var retourAccueil = this.game.add.text(x+width-130, y+height-50 , "Accueil", style);
     retourAccueil.inputEnabled = true;

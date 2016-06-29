@@ -6,11 +6,14 @@ var Application = {
 		height:800
 	},
 	debugMode:false,
+	tuto:PlayerPrefs.Load("tutoShowed"),
 	gameplay:{
 		items:5,//number of items in game
 		holes:null,
 		data:null,//store :item, missing and all
-		gameTimer:10,//minute
+		gameTimer:2,//minute
+		showTimer:null,
+		canPlay:null,
 		malusTimer:5,//Seconde
 		settings:{
 			sensorBoolean:PlayerPrefs.Load("sensorStatus"),
@@ -25,12 +28,16 @@ var Application = {
 			objectColGroup:null
 		},
 		audio:{
-			heartbeat:null
+			heartbeat:null,
+			ambiant:null,
+			ambiantPlayed:false,
+			loose:null
 		}
 	},
 	PlayerConf:{
 		normalSpeed:120,
-		runSpeed:450
+		runSpeed:450,
+		canMove:null //if player can move or not when dialogue is visible
 	},
 	ItemsConf:{ alpha:0},
 	SensorConf:{

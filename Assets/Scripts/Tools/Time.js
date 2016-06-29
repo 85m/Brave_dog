@@ -84,6 +84,11 @@ function Timer(_duration, _isRepeat, _Callback, _Game)
         return min + ' : ' + sec;
     }
 
+    this.getCurrentTime = function(){
+
+        return this.currentTime;
+    }
+
     this.Awake();
 }
 

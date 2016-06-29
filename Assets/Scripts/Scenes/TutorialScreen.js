@@ -12,10 +12,15 @@ Application.TutorialScreen.prototype = {
 		var centerX = this.game.world.centerX;
 		var centerY = this.game.world.centerY;
 
+
+		var image = this.add.image(Application.config.width / 2, Application.config.height / 2, 'command');
+		image.anchor.setTo(0.5,0.5);
+
+
 		//use google font after
 		var style = { font: "20px Verdana", fill: "#ff1105",boundsAlignH: "center", boundsAlignV: "middle" };
 
-		var accept 		= this.game.add.text(Application.config.width - 100, Application.config.height-100 , "Accept", style);
+		var accept 		= this.game.add.text(Application.config.width - 100, Application.config.height-100 , "retour", style);
 		accept.inputEnabled = true;
 		accept.events.onInputOver.add(returnTitle, this);
 	}

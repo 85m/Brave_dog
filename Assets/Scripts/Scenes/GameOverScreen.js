@@ -6,16 +6,32 @@ Application.GameOverScreen = function(){
 Application.GameOverScreen.prototype = {
 	create:function(){
 		console.log("Create GameOverScreen");
-
+        var centerX = this.game.world.centerX;
+        var centerY = this.game.world.centerY;
 		
-		ply.audio.looseGame.volume = .2;
-		ply.audio.looseGame.play();
+		Application.gameplay.audio.lose.volume = .2;
+		Application.gameplay.audio.lose.play();
+
+		var style 		= { font: "20px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
+		var styleBtn 	= { font: "15px Verdana", fill: "#ff0000",boundsAlignH: "center", boundsAlignV: "middle" };
+		var gameOverTxt = "Tu n'as pas pu sauver le disparu à temps";
+
+		this.game.add.text(centerX-60, centerY , "Game Over", style);
+		this.game.add.text(centerX/2, centerY+50 , gameOverTxt, style);
+
+		var retry 		= this.game.add.text(centerX-50, Application.config.height-100 , "Recommencer", styleBtn);
+        retry.inputEnabled = true;
+        retry.events.onInputOver.add(retryGame, this);
 
 	},
 	update:function(){
 
 	},
 	render:function(){
-		this.game.debug.text('Gamer Over', 100, 32);
 	}
+}
+
+
+function retryGame(){
+	game.state.start('Level');
 }

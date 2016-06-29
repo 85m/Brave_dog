@@ -79,46 +79,40 @@ Application.LevelScreen.prototype = {
 			t.body.debug = false;
 		}
 
-		// Application.gameplay.audio.heartbeat = game.add.audio('heartbeat');
-		// Application.gameplay.audio.heartbeat.volume = 1;
-		// Application.gameplay.audio.heartbeat.isPlaying = true;
-		// Application.gameplay.audio.heartbeat.loop = true;
-		// Application.gameplay.audio.heartbeat.play();
-		//console.log(this.heartbeat);
+		this.alreadyDown = false;
+		this.spacebarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-		//this.heart = game.add.sprite(50,10,'heart');
-		//var beat = this.heart.animations.add('beat');
-		//this.heart.animations.play('beat',2,true);
+
+		//CREDIT TO FF7 - Anxious Heart
+		if(!Application.gameplay.audio.ambiantPlayed){
+			Application.gameplay.audio.ambiant = game.add.audio('ambiant');
+			Application.gameplay.audio.ambiant.volume = .2;
+				Application.gameplay.audio.ambiant.play();
+				Application.gameplay.audio.ambiantPlayed = true;
+			}
+
+
 
 		/* THE TIMER */
-		//this.gameTimer = new Timer(Phaser.Timer.MINUTE*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
-		//this.gameTimer = new Timer(Phaser.Timer.SECOND*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
-
-
-		//INFO
-		var style = { font: "15px Verdana", fill: "#ffffff",boundsAlignH: "center", boundsAlignV: "middle" };
-		game.add.text(Application.config.width - 100, Application.config.height - 75 , "A : Loot", style);
-		game.add.text(Application.config.width - 100, Application.config.height - 50 , "X : Creuser", style);
-		game.add.text(Application.config.width - 100, Application.config.height - 25 , "Shift : courir", style);
+		Application.gameplay.showTimer = new Timer(Phaser.Timer.MINUTE*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
+		//Application.gameplay.showTimer = new Timer(Phaser.Timer.SECOND*3,false,this.gameOverScreen,this.game);
+		this.guiTimer = game.add.image(50,10,'timerbg');
+		this.textTimer = game.add.text(73, 14,Application.gameplay.showTimer.Display(), { font: "20px Verdana", fill: "#FFFFFF",boundsAlignH: "center", boundsAlignV: "middle" });
 
 
 		//TEST TEXT
-		this.test = {
-			boxed:true,
-			centered:false,
-			x:50,y:600,w:700,h:150,
-			fontSize:15,
-			bgColor:0x333333,
-			borderColor:0xFF0000,
-			content:[
-				{txt:"Bonjour Spencer, voici la situation, un accident à eu lieu ici et une personne manque"},
-				{txt:"Bonjour Al, voici la fin, un accident à eu lieu ici et une femme manque"},
-				{txt:"Bonjour frfeed, voici la fin, un accident à eu lieu ici et une femme manque"}
-			]
-		}
-		//textBox(this.test);
+		this.content = [
+				{txt:"Bonjour Spencer"},
+				{txt:"Bonjour Al"},
+				{txt:"Bonjour Freed"}
+		]
 
-		this.dial = new Dialogue(this.test.content);
+
+		if(Application.tuto == "false"){
+			this.dial = new Dialogue(this.content);
+			Application.gameplay.canPlay = false;
+		}
+		
 	},
 	update:function(){
 		this.player.sensorColSensorItem();
@@ -127,29 +121,27 @@ Application.LevelScreen.prototype = {
 		if(this.player.malusTimer != null){
 			this.player.malusTimer.Update();
 		}
-		//this.gameTimer.Update();
-		this.dial.update();
-		
+
+		//MANAGE DIALOGUE
+		if(Application.tuto == "false"){
+			if (this.spacebarKey.isDown){
+	            if(!this.alreadyDown){
+	                this.alreadyDown = true;
+	                this.dial.NextDialogue();
+	            }
+	        }else{
+	            this.alreadyDown = false;
+	        }
+	    }
+
+        //MANAGE TIMER
+        if(Application.gameplay.canPlay){
+        	Application.gameplay.showTimer.Update();
+        }
 	},
 	render:function(){
-
-		//this.game.debug.text('Time : ' + this.gameTimer.Display() , 100, 32);
-		
-		/* inutile d'affiché l'item - */
-		//this.game.debug.text('Item : ' + Application.gameData.items.length , 480, 32);
-		
-		/*
-		* Afficher timer
-		* Afficher nombre d'objet a rammasser
-		* afficher le disparu
-		*
-		*
-		* */
-
-		//game.debug.soundInfo(Application.gameplay.audio.heartbeat, 20, 32);
-
-		//game.debug.geom(playerRing[0].circleData,'rgba(255,0,0,.2)');
-		//game.debug.geom(playerRing[ playerRing.length-1 ].circleData,'rgba(255,0,0,.2)');
+		//Display updated timer
+		this.textTimer.setText(  Application.gameplay.showTimer.Display()   );		
 	},
 	gameOverScreen:function(){
 		//console.log(Application.gameplay.audio.heartbeat)
