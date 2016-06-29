@@ -31,7 +31,7 @@ var Application = {
 		normalSpeed:120,
 		runSpeed:450
 	},
-	ItemsConf:{ alpha:1},
+	ItemsConf:{ alpha:0},
 	SensorConf:{
 		player:{
 			layers:1,//actif layers in begin of game
