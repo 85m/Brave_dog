@@ -103,12 +103,11 @@ Application.LevelScreen.prototype = {
 
 		//TEST TEXT
 		this.content = [
-				{txt:"Secouriste Dexter, on nous a signalé qu'un accident a eu lieu ici.\nUne personne est portée disparue et qu'il ou elle est blessé(e).\n\nTa mission est de le retrouver mais attention car chaque seconde compte."},
+				{txt:"Secouriste Dexter, on nous a signalé qu'un accident a eu lieu ici.\nUne personne est portée disparue et qu'elle est blessé(e).\n\nTa mission est de la retrouver mais attention chaque seconde compte."},
 				{txt:"Pour cela tu peux faire confiance à ton incroyable flair\n(qui est représenté ici par un cercle bleu).\n\nTu peux utiliser ton flair pour retrouver des objets appartenant aux disparu,\nte permettant d'élargir ton flair facilitant ta recherche,"},
-				{txt:"aussi, certain objet peuvent te nuire (le cercle disparait un certain temps)\nou alors rechercher directement le disparu."},
-				{txt:"Bonne chance à toi Dexter, et rapelle toi, chaque seconde compte."}
+				{txt:"aussi, certain objets peuvent te nuire (le cercle disparait un certain temps)\nou alors rechercher directement le disparu."},
+				{txt:"Bonne chance à toi Dexter, et rappelle toi, chaque seconde compte."}
 		]
-
 
 		if(Application.tuto == "false"){
 			this.dial = new Dialogue(this.content);

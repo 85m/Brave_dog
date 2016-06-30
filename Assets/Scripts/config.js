@@ -129,3 +129,15 @@ window.addEventListener('click', getCoordonne);
 function getCoordonne(e){
 	console.log('x:'+e.clientX ,',y:'+e.clientY);
 }
+
+
+var pad;
+
+var buttonA;
+var buttonB;
+var buttonX;
+var buttonY;
+var buttonDPadLeft;
+var buttonDPadRight;
+var buttonDPadUp;
+var buttonDPadDown;
