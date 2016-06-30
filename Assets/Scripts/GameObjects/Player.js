@@ -1,9 +1,5 @@
 function Player(_x,_y){
-	//game.world.setBounds(0, 0, 2560, 1600);
-
 	var _self = game.add.sprite(_x, _y, "player");
-
-	//_self.scale.set(2);
 
     _self.animations.add('move_down',  [0,1,2]);
     _self.animations.add('move_left',  [3,4,5]);
@@ -15,9 +11,11 @@ function Player(_x,_y){
     _self.frame_currentSpeed 	= _self.frame_normalSpeed;
     _self.currentDirection		= null;
 
-
-	//game.camera.follow(_self);
-	//game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
+	if(Application.gameplay.level == 2){
+		game.world.setBounds(0, 0, 1280, 1280);
+		game.camera.follow(_self);
+		game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
+	}
 
 	_self.normalSpeed 	= Application.PlayerConf.normalSpeed;
 	_self.runSpeed 		= Application.PlayerConf.runSpeed;
@@ -67,10 +65,11 @@ function Player(_x,_y){
 
     /* Add first layers */
     addLayerstoPlayer(_self);
+	//put the player top of sensor layer
+	_self.bringToTop();
 
 	_self.update = function(){
     	_self.body.setZeroVelocity();
-
     	if(Application.gameplay.canPlay){ //for tuto
 
 			if (_self.controller.shiftKey.isDown)//RUN
@@ -188,6 +187,7 @@ function Player(_x,_y){
 						if(Application.SensorConf.player.layers < Application.SensorConf.player.sensors.length ){
 							Application.SensorConf.player.layers++;
 							addLayerstoPlayer(_self);
+							_self.bringToTop();
 						}
 						//add a hole if find something
 						Application.gameplay.holes.forEach(function(hole){
@@ -285,13 +285,10 @@ function gameFinished()
 	var graphics = game.add.graphics(0, 0);
 
 
-		var width = 750;
-		var height = 250;
-		var x = Application.config.width/2 - width/2;
-		var y = Application.config.height/2 - height/2;
-
-
-		console.log(x,y)
+	var width = 750;
+	var height = 250;
+	var x = Application.config.width/2 - width/2;
+	var y = Application.config.height/2 - height/2;
 
 	// draw a rectangle
 	graphics.beginFill(0x000000, 1);
@@ -303,28 +300,41 @@ function gameFinished()
 
     var congratsTxt = "Tu as sauvé le disparu";
     var infosTime = "Cela t'a pris : ";
-    var menuBtn = ""
+    var menuBtn = "";
 
 
     /*  CALCUL */
+    var tempsEcouler = Application.gameplay.showTimer.getCurrentTime();
 
-    var beginTime = Application.gameplay.gameTimer;
-    var tps = Application.gameplay.showTimer.getCurrentTime();
-    console.log(beginTime,tps);
+    var feliTitle = game.add.text(x + 50, y + 50 , "Félicitations :)", style);
+    var feliTxt = game.add.text(x + 50, y + 90 , congratsTxt, style);
+    var feliTime = game.add.text(x + 50, y + 130 , infosTime + tempsEcouler, style);
 
+	var lvl = "";
+	if(Application.gameplay.level == 1){
+		lvl = "niv 2";
+	}else{
+		lvl = "niv 3";
+	}
 
-
-
-    game.add.text(x + 50, y + 50 , "Félicitations :)", style);
-    game.add.text(x + 50, y + 90 , congratsTxt, style);
-    game.add.text(x + 50, y + 130 , infosTime + Application.gameplay.showTimer.Display(), style);
-
-    var retourAccueil = this.game.add.text(x+width-130, y+height-50 , "Accueil", style);
+    var retourAccueil = this.game.add.text(x+width-130, y+height-50 , lvl , style);
     retourAccueil.inputEnabled = true;
-    retourAccueil.events.onInputOver.add(returntoTitle, this);
+    retourAccueil.events.onInputOver.add(nextLevel, this);
+
+	if(Application.gameplay.level == 2){
+		graphics.fixedToCamera = true;
+		retourAccueil.fixedToCamera = true;
+		feliTitle.fixedToCamera = true;
+		feliTxt.fixedToCamera = true;
+		feliTime.fixedToCamera = true;
+	}
 }
 
-function returntoTitle(){
-	//game.paused = false;
-	game.state.start('Title');
+function nextLevel(){
+	if(Application.gameplay.level == 1){
+		game.state.start('Level2');
+	}else{
+		game.state.start('Level');
+	}
+
 }

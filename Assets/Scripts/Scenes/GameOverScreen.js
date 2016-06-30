@@ -19,6 +19,8 @@ Application.GameOverScreen.prototype = {
 		this.game.add.text(centerX-60, centerY , "Game Over", style);
 		this.game.add.text(centerX/2, centerY+50 , gameOverTxt, style);
 
+
+		this.button = game.add.image(centerX-74, Application.config.height-105,'button');
 		var retry 		= this.game.add.text(centerX-50, Application.config.height-100 , "Recommencer", styleBtn);
         retry.inputEnabled = true;
         retry.events.onInputOver.add(retryGame, this);
@@ -33,5 +35,9 @@ Application.GameOverScreen.prototype = {
 
 
 function retryGame(){
-	game.state.start('Level');
+	if(Application.gameplay.level == 1){
+		game.state.start('Level');
+	}else{
+		game.state.start('Level2');
+	}
 }

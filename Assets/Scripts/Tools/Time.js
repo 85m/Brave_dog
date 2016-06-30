@@ -86,7 +86,17 @@ function Timer(_duration, _isRepeat, _Callback, _Game)
 
     this.getCurrentTime = function(){
 
-        return this.currentTime;
+        var min = this.currentTime / 60000 |0;
+        var sec = ((this.currentTime % 60000) / 1000) |0;
+        if(min <= 9)
+        {
+            min = '0' + min;
+        }
+        if(sec <= 9)
+        {
+            sec = '0' + sec;
+        }
+        return min + ' : ' + sec;
     }
 
     this.Awake();

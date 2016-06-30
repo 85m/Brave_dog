@@ -20,7 +20,8 @@ Application.TutorialScreen.prototype = {
 		//use google font after
 		var style = { font: "20px Verdana", fill: "#ff1105",boundsAlignH: "center", boundsAlignV: "middle" };
 
-		var accept 		= this.game.add.text(Application.config.width - 100, Application.config.height-100 , "retour", style);
+		this.button		= game.add.image(Application.config.width - 170, Application.config.height-100 ,'button');
+		var accept 		= this.game.add.text(Application.config.width - 125, Application.config.height-100 , "retour", style);
 		accept.inputEnabled = true;
 		accept.events.onInputOver.add(returnTitle, this);
 	}

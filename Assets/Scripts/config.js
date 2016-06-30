@@ -27,12 +27,13 @@ var Application = {
 			missingColGroup:null,
 			objectColGroup:null
 		},
-		audio:{
-			heartbeat:null,
-			ambiant:null,
-			ambiantPlayed:false,
-			loose:null
-		}
+		audio: {
+			heartbeat: null,
+			ambiant: null,
+			ambiantPlayed: false,
+			loose: null
+		},
+		level:null
 	},
 	PlayerConf:{
 		normalSpeed:120,
@@ -104,14 +105,23 @@ var collideTile =[
 ];
 
 
-var goodItem = [
+var ItemArr = [
 	{name:'bomberman',	x:784,y:291,w:16,h:16,type:'good'},
-	{name:'book',		x:270,y:779,w:16,h:16,type:'good'},
+	{name:'book',		x:270,y:779,w:16,h:16,type:'bad'},
 	{name:'glass',		x:469,y:241,w:16,h:16,type:'good'},
 	{name:'hat',		x:354,y:369,w:16,h:16,type:'good'},
-	{name:'shave',		x:232,y:303,w:16,h:16,type:'good'}
+	{name:'shave',		x:232,y:303,w:16,h:16,type:'bad'}
 ]
 
+
+/* level 2*/
+var ItemArr2 = [
+	{name:'bomberman',	x:500,y:590,w:16,h:16,type:'good'},
+	{name:'book',		x:65,y:365,w:16,h:16,type:'bad'},
+	{name:'glass',		x:270,y:945,w:16,h:16,type:'good'},
+	{name:'hat',		x:1230,y:1230,w:16,h:16,type:'good'},
+	{name:'shave',		x:830,y:20,w:16,h:16,type:'bad'}
+]
 
 
 window.addEventListener('click', getCoordonne);

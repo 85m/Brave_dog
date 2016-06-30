@@ -19,20 +19,30 @@ function Item(_item,_cpt){
 }
 function itemGroups(){
 	var _items = game.add.group();
+    var anItem,hole;
 
 	_items.enableBody = true;
     _items.physicsBodyType = Phaser.Physics.P2JS;
 
     for (var i = 0; i < Application.gameplay.items; i++){
-        var anItem = Item(goodItem[i],i);
+        if(Application.gameplay.level == 1){
+            anItem = Item(ItemArr[i],i);
+        }else{
+            anItem = Item(ItemArr2[i],i);
+        }
+
         addSensorToItem(anItem);
         _items.add(anItem);
 
-        var hole = game.add.sprite(goodItem[i].x,goodItem[i].y,'dog_hole');
+        if(Application.gameplay.level == 1){
+            hole = game.add.sprite(ItemArr[i].x,ItemArr[i].y,'dog_hole');
+        }else{
+            hole = game.add.sprite(ItemArr2[i].x,ItemArr2[i].y,'dog_hole');
+        }
         hole.name = "item_"+i;
         hole.visible = false;
-        hole.scale.x = .5;
-        hole.scale.y = .5;
+        hole.scale.x = .8;
+        hole.scale.y = .8;
         Application.gameplay.holes.add(hole);
     }
     _items.visible = true;

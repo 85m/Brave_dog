@@ -43,7 +43,7 @@ function addLayerstoPlayer(_player){
 
     game.physics.p2.enable( _self , false);
     _self.body.static = true;
-    _self.body.debug = Application.debugMode
+    _self.body.debug = Application.debugMode;
 
     _player.sensor.push(_self);
     playerFeedBackSensor(_player);

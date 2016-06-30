@@ -1,11 +1,9 @@
-function Dialogue(_content,_status){
+function Dialogue(_content){
 
     var _self = this;
     this.idx = 0;
     this.alreadyDown = false;
     this.spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-    this.dialogueVisible = _status;
 
     this.dialogData = {
         x:50,
@@ -24,6 +22,7 @@ function Dialogue(_content,_status){
                 this.dialogData.y + this.dialogData.contentGutter(),
                 _content[ this.idx ].txt ,
                 style);
+    this.dialNext = game.add.image(Application.config.width-70,Application.config.height-70,'dialogueNext');
 
 
     this.NextDialogue = function(){
@@ -34,6 +33,7 @@ function Dialogue(_content,_status){
             this.graphics.destroy();
             this.txt.destroy();
             Application.gameplay.canPlay = true;
+            PlayerPrefs.Save('tutoShowed',true);
         }
     }
 
@@ -48,11 +48,12 @@ function Dialogue(_content,_status){
 
     this.displayTxt = function(){
         _self.txt.setText(_content[ this.idx].txt );
+        //diplay next
+        if(this.idx == _content.length-1){
+            this.dialNext.destroy();
+        }
     }
-
     this.box();
-    //diplay spacebar - unused
-    //this.guiSpacebar = game.add.image(Application.config.width-120,Application.config.height-60,'spacebar');
 
     return this;
 }

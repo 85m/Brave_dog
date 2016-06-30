@@ -15,6 +15,7 @@ game.state.add('Title',Application.TitleScreen);
 game.state.add('Tutorial',Application.TutorialScreen);
 game.state.add('Setting',Application.SettingScreen);
 game.state.add('Level',Application.LevelScreen);
+game.state.add('Level2',Application.Level2Screen);
 game.state.add('GameOver',Application.GameOverScreen);
 
 

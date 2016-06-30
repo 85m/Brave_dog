@@ -11,9 +11,11 @@ Application.LoadingScreen.prototype = {
         this.load.image("loading","Assets/Graphics/Preload/preloader-bar.png");
         /* LOGO BRAVE DOG  */
         this.load.image("logoBraveDog","Assets/Graphics/Preload/Brave_Dog.png");
+        this.load.image("logoFishing","Assets/Graphics/Preload/Fishing-Cactus.png");
 
         /* BACKGROUND AN ENVIRONMENT  */
         game.load.tilemap('map', 'Assets/Graphics/Map/Map.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map2', 'Assets/Graphics/Map/Map2.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('000', 'Assets/Graphics/Map/Tile/000.png');
         game.load.image('001', 'Assets/Graphics/Map/Tile/001.png');
         game.load.image('002', 'Assets/Graphics/Map/Tile/002.png');
@@ -35,6 +37,8 @@ Application.LoadingScreen.prototype = {
         this.load.image('timerbg', 'Assets/Graphics/GUI/timer_bg.png');
         this.load.image('spacebar', 'Assets/Graphics/GUI/spacebar.png');
         this.load.image('command', 'Assets/Graphics/GUI/command.png');
+        this.load.image('button', 'Assets/Graphics/GUI/button.png');
+        this.load.image('dialogueNext', 'Assets/Graphics/GUI/dialogueNext.png');
 
         /* MISSING  */
         this.load.image('missing', 'Assets/Graphics/Missing/missing.png');
@@ -69,8 +73,10 @@ Application.LoadingScreen.prototype = {
 		console.log("Create LoadingScreen");
 
 		game.stage.backgroundColor = "#FFF";
-		var image = this.add.image(Application.config.width / 2, Application.config.height / 2, 'technobel_logo');
-		image.anchor.setTo(0.5,0.5);
+		var technobel = this.add.image(200, Application.config.height / 2, 'technobel_logo');
+		technobel.anchor.setTo(0.5,0.5);
+		var fishing = this.add.image(Application.config.width-200, Application.config.height / 2, 'logoFishing');
+		fishing.anchor.setTo(0.5,0.5);
 
 		var _self = this;
 		setTimeout(function () {	

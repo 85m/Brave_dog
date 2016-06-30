@@ -16,6 +16,9 @@ Application.LevelScreen.prototype = {
 	create:function(){
 
 		console.log("Create LevelScreen");
+		Application.gameplay.level = 1;
+
+
 	    this.game.physics.startSystem(Phaser.Physics.P2JS);
 	    this.game.physics.p2.setImpactEvents(true);
 	    this.game.physics.p2.updateBoundsCollisionGroup();
@@ -58,7 +61,7 @@ Application.LevelScreen.prototype = {
 		this.itemGroups.add(this.missing);
 		Application.gameplay.data = this.itemGroups;
 		/* THE PLAYER */
-		this.player = new Player(750,400);
+		this.player = new Player(750,500);
 		/* ********** */
 
 		this.layer = this.map.createLayer('upthree');
@@ -91,26 +94,27 @@ Application.LevelScreen.prototype = {
 				Application.gameplay.audio.ambiantPlayed = true;
 			}
 
-
-
 		/* THE TIMER */
 		Application.gameplay.showTimer = new Timer(Phaser.Timer.MINUTE*Application.gameplay.gameTimer,false,this.gameOverScreen,this.game);
-		//Application.gameplay.showTimer = new Timer(Phaser.Timer.SECOND*3,false,this.gameOverScreen,this.game);
+		//Application.gameplay.showTimer = new Timer(Phaser.Timer.SECOND*5,false,this.gameOverScreen,this.game);
 		this.guiTimer = game.add.image(50,10,'timerbg');
 		this.textTimer = game.add.text(73, 14,Application.gameplay.showTimer.Display(), { font: "20px Verdana", fill: "#FFFFFF",boundsAlignH: "center", boundsAlignV: "middle" });
 
 
 		//TEST TEXT
 		this.content = [
-				{txt:"Bonjour Spencer"},
-				{txt:"Bonjour Al"},
-				{txt:"Bonjour Freed"}
+				{txt:"Secouriste Dexter, on nous a signalé qu'un accident a eu lieu ici.\nUne personne est portée disparue et qu'il ou elle est blessé(e).\n\nTa mission est de le retrouver mais attention car chaque seconde compte."},
+				{txt:"Pour cela tu peux faire confiance à ton incroyable flair\n(qui est représenté ici par un cercle bleu).\n\nTu peux utiliser ton flair pour retrouver des objets appartenant aux disparu,\nte permettant d'élargir ton flair facilitant ta recherche,"},
+				{txt:"aussi, certain objet peuvent te nuire (le cercle disparait un certain temps)\nou alors rechercher directement le disparu."},
+				{txt:"Bonne chance à toi Dexter, et rapelle toi, chaque seconde compte."}
 		]
 
 
 		if(Application.tuto == "false"){
 			this.dial = new Dialogue(this.content);
 			Application.gameplay.canPlay = false;
+		}else{
+			Application.gameplay.canPlay = true;
 		}
 		
 	},
@@ -141,7 +145,7 @@ Application.LevelScreen.prototype = {
 	},
 	render:function(){
 		//Display updated timer
-		this.textTimer.setText(  Application.gameplay.showTimer.Display()   );		
+		this.textTimer.setText(  Application.gameplay.showTimer.Display()   );
 	},
 	gameOverScreen:function(){
 		//console.log(Application.gameplay.audio.heartbeat)
