@@ -12,6 +12,7 @@ Application.LoadingScreen.prototype = {
         /* LOGO BRAVE DOG  */
         this.load.image("logoBraveDog","Assets/Graphics/Preload/Brave_Dog.png");
         this.load.image("logoFishing","Assets/Graphics/Preload/Fishing-Cactus.png");
+        this.load.image("bgTitle","Assets/Graphics/Preload/bgtitle.jpg");
 
         /* BACKGROUND AN ENVIRONMENT  */
         game.load.tilemap('map', 'Assets/Graphics/Map/Map.json', null, Phaser.Tilemap.TILED_JSON);

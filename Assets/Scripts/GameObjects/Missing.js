@@ -1,7 +1,7 @@
 function Missing(_x,_y){
     var _self = game.add.sprite(_x, _y, "missing");
     _self.name = "missing";
-    _self.scale.set(1.3);
+    _self.scale.set(1.8);
     _self.alpha = Application.ItemsConf.alpha;
     game.physics.p2.enable([_self],false);
     _self.body.fixedRotation = true;

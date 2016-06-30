@@ -11,7 +11,8 @@ Application.TitleScreen.prototype = {
 		var centerX = this.game.world.centerX;
 		var centerY = this.game.world.centerY;
 
-		game.stage.backgroundColor = "#000";
+		//game.stage.backgroundColor = "#000";
+		game.add.image(0,0,'bgTitle');
 
 		if(Application.gameplay.audio.ambiant != null){
 			Application.gameplay.audio.ambiant.stop();
@@ -29,18 +30,18 @@ Application.TitleScreen.prototype = {
 
 
 		//use google font after
-		var style = { font: "20px Verdana", fill: "#3EC300",boundsAlignH: "center", boundsAlignV: "middle" };
+		var style = { font: "20px Verdana", fill: "#e13700",boundsAlignH: "center", boundsAlignV: "middle" };
 
 
 /*		var settings 	= this.game.add.text(centerX, Application.config.height-190 , "Settings", style);
 		settings.inputEnabled = true;
 		settings.events.onInputOver.add(startSetting, this);*/
 
-		var command 	= this.game.add.text(centerX, Application.config.height-133 , "Command", style);
+		var command 	= this.game.add.text(centerX, Application.config.height-133 , "COMMAND", style);
 		command.inputEnabled = true;
 		command.events.onInputOver.add(startTuto, this);
 
-		var start 		= this.game.add.text(centerX, Application.config.height-173 , "Start", style);
+		var start 		= this.game.add.text(centerX, Application.config.height-173 , "JOUER", style);
 		start.inputEnabled = true;
 		start.events.onInputOver.add(startGame, this);
 

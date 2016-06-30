@@ -31,6 +31,14 @@ function Player(_x,_y){
 		lootKey: 	game.input.keyboard.addKey(Phaser.Keyboard.A)
 	}
 
+
+	_self.pad = {
+
+
+		
+	}
+
+
 	_self.isAlreadyDown = false;//for dig (only once)
 
 	_self.audio = {

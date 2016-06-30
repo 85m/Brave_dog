@@ -57,7 +57,7 @@ Application.LevelScreen.prototype = {
 		/*   ITEMS */
 		this.itemGroups = new itemGroups();
 		/* THE MISSING IS A PART OF ITEMS GROUP */
-		this.missing 	= new Missing(23,520);
+		this.missing 	= new Missing(45,520);
 		this.itemGroups.add(this.missing);
 		Application.gameplay.data = this.itemGroups;
 		/* THE PLAYER */
